@@ -19,8 +19,8 @@ namespace HealthMonitoringWebsite.Shared.Domain
         public string? PatientBloodType { get; set; }
         //public string PatientEthnicity { get; set; }
         public string? PatientAddress { get; set; }
-        public int PatientContactNumber { get; set; }
-        public int? PatientEmergencyContact {  get; set; }
+        public string? PatientContactNumber { get; set; }
+        public string? PatientEmergencyContact {  get; set; }
         public string? Email {  get; set; }
         public string? Password { get; set; }
     }

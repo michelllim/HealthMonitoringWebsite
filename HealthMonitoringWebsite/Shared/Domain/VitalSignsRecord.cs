@@ -14,8 +14,8 @@ namespace HealthMonitoringWebsite.Shared.Domain
         public float? Height { get; set; }
         public float? Weight { get; set; }
         public float? BodyTemperature { get; set; }
-        public float? BloodPressureSystolic { get; set; }
-        public float? BloodPressureDiastolic { get; set; }
+        public int? BloodPressureSystolic { get; set; }
+        public int? BloodPressureDiastolic { get; set; }
         public int? HeartRate { get; set; }
         public int? RespirationRate { get; set; }
         public int? OtherBloodGlucoseLevel { get; set; }

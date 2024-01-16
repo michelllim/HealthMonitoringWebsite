@@ -16,5 +16,6 @@ namespace HealthMonitoringWebsite.Shared.Domain
         public string? ConsultationContent { get; set; }
         public string? ConsultationLocation { get; set; }
         public virtual VitalSignsRecord? VitalSignsRecord { get; set; }  
+        public virtual Appointment? Appointment { get; set; }
     }
 }
