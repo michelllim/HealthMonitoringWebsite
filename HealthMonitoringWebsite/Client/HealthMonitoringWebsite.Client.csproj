@@ -22,14 +22,4 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\bg-doc.png" />
-    <None Include="wwwroot\css\main.css" />
-    <None Include="wwwroot\modelpic.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\testimg\" />
-  </ItemGroup>
-
 </Project>
