@@ -16,7 +16,14 @@ namespace HealthMonitoringWebsite.Server.Data
         {
         }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Consultation> Consultations { get; set; }
+        public DbSet<Diagnosis> Diagnosiss { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
         public DbSet<Staff> Staffs { get; set; }
+        public DbSet<VitalSignsRecord> VitalSignsRecord { get; set; }
+        
     }
 }
