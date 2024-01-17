@@ -11,7 +11,7 @@ namespace HealthMonitoringWebsite.Shared.Domain
     {
         public int PatientID { get; set; }
         public string? PatientName { get; set; }
-        public DateOnly PatientDateOfBirth { get; set; }
+        public DateTime PatientDateOfBirth { get; set; }
         public string? PatientGender { get; set; }
         public string? PatientNRIC {  get; set; }
         public string? PatientFamilyHistory { get; set; }

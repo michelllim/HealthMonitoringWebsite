@@ -9,8 +9,8 @@ namespace HealthMonitoringWebsite.Shared.Domain
     public class VitalSignsRecord: BaseDomainModel
     {
         public int RecordID { get; set; }
-        public DateOnly RecordDate { get; set; }
-        public TimeOnly RecordTime { get; set; }
+        public DateTime RecordDate { get; set; }
+        public DateTime RecordTime { get; set; }
         public float? Height { get; set; }
         public float? Weight { get; set; }
         public float? BodyTemperature { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HealthMonitoringWebsite.Shared.Domain
 {
-    public abstract class PrescriptionItem : BaseDomainModel
+    public class PrescriptionItem : BaseDomainModel
     {
         public int PrescriptionItemID { get; set; }
         public string? PDosage { get; set; }

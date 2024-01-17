@@ -16,7 +16,7 @@ namespace HealthMonitoringWebsite.Shared.Domain
         public int? MTotalAmount { get; set; }
         public string? MInstructions { get; set; }
         public string? MPurpose { get; set; }
-        public DateOnly MExpiryDate { get; set; }
+        public DateTime MExpiryDate { get; set; }
 
 
     }

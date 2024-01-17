@@ -9,9 +9,9 @@ namespace HealthMonitoringWebsite.Shared.Domain
     public class Consultation: BaseDomainModel
     {
         public int ConsultationID { get; set; }
-        public DateOnly ConsultationDate { get; set; }
-        public TimeOnly ConsultationStartTime { get; set; }
-        public TimeOnly ConsultationEndTime { get; set; }
+        public DateTime ConsultationDate { get; set; }
+        public DateTime ConsultationStartTime { get; set; }
+        public DateTime ConsultationEndTime { get; set; }
         public float? ConsultationPrice { get; set; }
         public string? ConsultationContent { get; set; }
         public string? ConsultationLocation { get; set; }
