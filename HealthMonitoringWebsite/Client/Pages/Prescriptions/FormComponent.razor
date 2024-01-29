@@ -1,0 +1,76 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@prescription" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+ 		<div class="form-group">
+			<label>Issue Date: </label>
+			<div>
+				<InputDate @bind-Value="@prescription.PIssueDate" class="form-control" />
+				<ValidationMessage For="@(() => prescription.PIssueDate)" />
+			</div>
+		</div>
+
+@* 		@if (prescription.Id > 0)
+		{
+			<div class="form-group">
+				<label>Issue Date: </label>
+				<div>
+					<InputDate @bind-Value="@prescription.PIssueDate" class="form-control" />
+					<ValidationMessage For="@(() => prescription.PIssueDate)" />
+				</div>
+			</div>
+		} *@
+
+		<div class="form-group">
+			<label>Expiry Date: </label>
+			<div>
+				<InputDate @bind-Value="@prescription.PExpiryDate" class="form-control" />
+				<ValidationMessage For="@(() => prescription.PExpiryDate)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>ConsultationID: </label>
+			<div>
+				<InputSelect @bind-Value="prescription.Consultation" class="form-control">
+					<option value="">-- Select Consultation --</option>
+					@if (Consultations != null)
+					{
+						foreach (var consultation in Consultations)
+						{
+							<option value="@consultation.Id">@consultation.ConsultationDate - @consultation.ConsultationID</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => prescription.Consultation)" />
+			</div>
+		</div>
+
+	</fieldset>
+
+	@if (!Disabled)
+	{
+		<button type="submit" class="btn btn-success btn-block">
+			@ButtonText
+		</button>
+	}
+
+	<BackToList Target="prescriptions" />
+</EditForm>
+
+@code {
+	[Parameter] public Prescription? prescription { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	[Parameter] public bool Disabled { get; set; } = false;
+
+	private IList<Consultation>? Consultations;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
+	}
+
+}

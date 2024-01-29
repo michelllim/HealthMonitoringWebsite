@@ -1,0 +1,101 @@
+﻿@page "/Patients/"
+@using HealthMonitoringWebsite.Client.Services
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<h3 class="card-title">Patients</h3>
+<br />
+
+<a href="/Patients/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Patient
+</a>
+<br />
+<br />
+
+@if (Patients == null)
+{
+	<div class="alert alert-info">Loading Patients...</div>
+}
+else
+{
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Full Name</th>
+				<th>Date of Birth</th>
+				<th>Gender</th>
+				<th>NRIC</th>
+				<th>Family History</th>
+				<th>Allergies</th>
+				<th>Blood Type</th>
+				<th>Address</th>
+				<th>Contact Number</th>
+				<th>Emergency Contact</th>
+				<th>Email</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var patient in Patients)
+			{
+				<tr>
+					<td>@patient.PatientName</td>
+					<td>@patient.PatientDateOfBirth</td>
+					<td>@patient.PatientGender</td>
+					<td>@patient.PatientNRIC</td>
+					<td>@patient.PatientFamilyHistory</td>
+					<td>@patient.PatientAllergies</td>
+					<td>@patient.PatientBloodType</td>
+					<td>@patient.PatientAddress</td>
+					<td>@patient.PatientContactNumber</td>
+					<td>@patient.PatientEmergencyContact</td>
+					<td>@patient.Email</td>
+					<td>
+						<a href="/Patients/view/@patient.Id" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/Patients/edit/@patient.Id" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(()=>Delete(patient.Id))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private List<Patient>? Patients;
+
+	protected async override Task OnInitializedAsync()
+	{
+		_interceptor.MonitorEvent();
+		Patients = await _client.GetFromJsonAsync<List<Patient>>($"{Endpoints.PatientsEndpoint}");
+	}
+
+	async Task Delete(int patientId)
+	{
+		if (Patients != null)
+		{
+			var Patient = Patients.First(q => q.Id == patientId);
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Patient.PatientName}?");
+			if (confirm)
+			{
+				await _client.DeleteAsync($"{Endpoints.PatientsEndpoint}/{patientId}");
+				await OnInitializedAsync();
+			}
+		}
+	}
+
+	public void Dispose()
+	{
+		_interceptor.DisposeEvent();
+	}
+}

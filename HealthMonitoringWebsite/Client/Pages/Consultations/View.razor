@@ -1,0 +1,27 @@
+﻿@page "/consultations/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Consultation</h3>
+
+<FormComponent consultation="consultation" Disabled="true" />
+
+@code {
+	[Parameter] public int id { get; set; }
+	Consultation? consultation = new Consultation();
+
+	private IList<VitalSignsRecord>? VitalSignsRecords;
+	//private IList<Appointment>? Appointments;
+
+	protected async override Task OnInitializedAsync()
+	{
+		VitalSignsRecords = await _client.GetFromJsonAsync<List<VitalSignsRecord>>($"{Endpoints.VitalSignsRecordsEndpoint}");
+		// Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+	}
+
+	protected async override Task OnParametersSetAsync()
+	{
+		consultation = await
+		_client.GetFromJsonAsync<Consultation>($"{Endpoints.ConsultationsEndpoint}/{id}");
+	}
+}

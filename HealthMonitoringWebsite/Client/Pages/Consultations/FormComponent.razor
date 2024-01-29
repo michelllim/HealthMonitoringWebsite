@@ -1,0 +1,115 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@consultation" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+		<div class="form-group">
+			<label>Date: </label>
+			<div>
+				<InputDate @bind-Value="@consultation.ConsultationDate" class="form-control" />
+				<ValidationMessage For="@(() => consultation.ConsultationDate)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Start Time: </label>
+			<div>
+				<InputDate @bind-Value="@consultation.ConsultationStartTime" class="form-control" />
+				<ValidationMessage For="@(() => consultation.ConsultationStartTime)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>End Time: </label>
+			<div>
+				<InputDate @bind-Value="@consultation.ConsultationEndTime" class="form-control" />
+				<ValidationMessage For="@(() => consultation.ConsultationEndTime)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Price: </label>
+			<div>
+				<InputNumber @bind-Value="@consultation.ConsultationPrice" class="form-control" />
+				<ValidationMessage For="@(() => consultation.ConsultationPrice)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Content: </label>
+			<div>
+				<InputText @bind-Value="@consultation.ConsultationContent" class="form-control" />
+				<ValidationMessage For="@(() => consultation.ConsultationContent)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Location: </label>
+			<div>
+				<InputText @bind-Value="@consultation.ConsultationLocation" class="form-control" />
+				<ValidationMessage For="@(() => consultation.ConsultationLocation)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>RecordID: </label>
+			<div>
+				<InputSelect @bind-Value="consultation.VitalSignsRecord" class="form-control">
+					<option value="">-- Select Record --</option>
+					@if (VitalSignsRecords != null)
+					{
+						foreach (var vitalsignsrecord in VitalSignsRecords)
+						{
+							<option value="@vitalsignsrecord.Id">@vitalsignsrecord.RecordDate - @vitalsignsrecord.RecordID</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => consultation.VitalSignsRecord)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>AppointmentID: </label>
+@* 			<div>
+				<InputSelect @bind-Value="consultation.Appointment" class="form-control">
+					<option value="">-- Select Appointment --</option>
+					@if (Appointments != null)
+					{
+						foreach (var appointment in Appointments)
+						{
+							<option value="@appointment.Id">@appointment.AppointmentDate - @appointment.AppointmentID</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => consultation.Appointment)" />
+			</div> *@
+		</div>
+
+	</fieldset>
+
+	@if (!Disabled)
+	{
+		<button type="submit" class="btn btn-success btn-block">
+			@ButtonText
+		</button>
+	}
+
+	<BackToList Target="consultations" />
+</EditForm>
+
+@code {
+	[Parameter] public Consultation? consultation { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	[Parameter] public bool Disabled { get; set; } = false;
+
+	private IList<VitalSignsRecord>? VitalSignsRecords;
+	//private IList<Appointment>? Appointments;
+
+	protected async override Task OnInitializedAsync()
+	{
+		VitalSignsRecords = await _client.GetFromJsonAsync<List<VitalSignsRecord>>($"{Endpoints.VitalSignsRecordsEndpoint}");
+		// Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+	}
+}

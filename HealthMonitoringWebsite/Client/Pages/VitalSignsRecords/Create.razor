@@ -1,0 +1,19 @@
+﻿@page "/vitalsignsrecords/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Record</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create VitalSignsRecord" vitalsignsrecord="vitalsignsrecord" OnValidSubmit="@CreateVitalSignsRecord" />
+
+@code {
+	private VitalSignsRecord vitalsignsrecord = new VitalSignsRecord();
+
+	private async Task CreateVitalSignsRecord()
+	{
+		await _client.PostAsJsonAsync(Endpoints.VitalSignsRecordsEndpoint, vitalsignsrecord);
+		_navManager.NavigateTo("/vitalsignsrecords/");
+	}
+}

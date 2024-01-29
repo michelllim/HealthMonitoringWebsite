@@ -22,6 +22,7 @@ namespace HealthMonitoringWebsite.Shared.Domain
         public int? OtherBloodOxygenLevel { get; set; }
         public int? OtherStepCount { get; set; }
         public float? Others {  get; set; }
+        //change to string
         public virtual Patient? Patient { get; set; }
     }
 }

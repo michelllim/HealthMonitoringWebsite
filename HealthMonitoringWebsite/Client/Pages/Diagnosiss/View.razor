@@ -1,0 +1,26 @@
+﻿@page "/diagnosiss/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Diagnosis</h3>
+
+<FormComponent diagnosis="diagnosis" Disabled="true" />
+
+@code {
+	[Parameter] public int id { get; set; }
+	Diagnosis? diagnosis = new Diagnosis();
+
+	private IList<Consultation>? Consultations;
+
+
+	protected async override Task OnInitializedAsync()
+	{
+		Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
+	}
+
+	protected async override Task OnParametersSetAsync()
+	{
+		diagnosis = await
+		_client.GetFromJsonAsync<Diagnosis>($"{Endpoints.DiagnosissEndpoint}/{id}");
+	}
+}

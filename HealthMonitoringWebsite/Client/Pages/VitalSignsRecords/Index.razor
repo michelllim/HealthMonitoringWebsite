@@ -1,0 +1,98 @@
+﻿@page "/VitalSignsRecords/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Vital Signs Records</h3>
+<br />
+
+<a href="/VitalSignsRecords/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Record
+</a>
+<br />
+<br />
+
+@if (VitalSignsRecords == null)
+{
+	<div class="alert alert-info">Loading Vital Signs Records...</div>
+}
+else
+{
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Height</th>
+				<th>Weight</th>
+				<th>Body Temperature</th>
+				<th>Blood Pressure Systolic</th>
+				<th>Blood Pressure Diastolic</th>
+				<th>Heart Rates</th>
+				<th>Respiration Rate</th>
+				<th>Blood Glucose Level</th>
+				<th>Blood Oxygen Level</th>
+				<th>Step Count</th>
+				<th>Others</th>
+				<th>PatientID</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var vitalsignsrecord in VitalSignsRecords)
+			{
+				<tr>
+					<td>@vitalsignsrecord.RecordDate</td>
+					<td>@vitalsignsrecord.RecordTime</td>
+					<td>@vitalsignsrecord.Height</td>
+					<td>@vitalsignsrecord.Weight</td>
+					<td>@vitalsignsrecord.BodyTemperature</td>
+					<td>@vitalsignsrecord.BloodPressureSystolic</td>
+					<td>@vitalsignsrecord.BloodPressureDiastolic</td>
+					<td>@vitalsignsrecord.HeartRate</td>
+					<td>@vitalsignsrecord.RespirationRate</td>
+					<td>@vitalsignsrecord.OtherBloodGlucoseLevel</td>
+					<td>@vitalsignsrecord.OtherBloodOxygenLevel</td>
+					<td>@vitalsignsrecord.OtherStepCount</td>
+					<td>@vitalsignsrecord.Others</td>
+					<td>@vitalsignsrecord.Patient</td>
+					<td>
+						<a href="/VitalSignsRecords/view/@vitalsignsrecord.Id" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/VitalSignsRecords/edit/@vitalsignsrecord.Id" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(()=>Delete(vitalsignsrecord.Id))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private List<VitalSignsRecord>? VitalSignsRecords;
+
+	protected async override Task OnInitializedAsync()
+	{
+		VitalSignsRecords = await _client.GetFromJsonAsync<List<VitalSignsRecord>>($"{Endpoints.VitalSignsRecordsEndpoint}");
+	}
+
+	async Task Delete(int VitalSignsRecordId)
+	{
+		if (VitalSignsRecords != null)
+		{
+			var VitalSignsRecord = VitalSignsRecords.First(q => q.Id == VitalSignsRecordId);
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {VitalSignsRecord.RecordID}?");
+			if (confirm)
+			{
+				await _client.DeleteAsync($"{Endpoints.VitalSignsRecordsEndpoint}/{VitalSignsRecordId}");
+				await OnInitializedAsync();
+			}
+		}
+	}
+}

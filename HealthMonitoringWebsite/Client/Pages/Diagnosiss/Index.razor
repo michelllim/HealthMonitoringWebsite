@@ -1,0 +1,82 @@
+﻿@page "/Diagnosiss/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Diagnoses</h3>
+<br />
+
+<a href="/Diagnosiss/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Diagnosis
+</a>
+<br />
+<br />
+
+@if (Diagnosiss == null)
+{
+	<div class="alert alert-info">Loading Diagnoses...</div>
+}
+else
+{
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Body Part</th>
+				<th>Symptoms</th>
+				<th>Conditions</th>
+				<th>ConsultationID</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var diagnosis in Diagnosiss)
+			{
+				<tr>
+					<td>@diagnosis.DiagnosisDate</td>
+					<td>@diagnosis.DiagnosisTime</td>
+					<td>@diagnosis.BodyPart</td>
+					<td>@diagnosis.Symptoms</td>
+					<td>@diagnosis.Conditions</td>
+					<td>@diagnosis.Consultation</td>
+					<td>
+						<a href="/Diagnosiss/view/@diagnosis.Id" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/Diagnosiss/edit/@diagnosis.Id" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(()=>Delete(diagnosis.Id))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private List<Diagnosis>? Diagnosiss;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Diagnosiss = await _client.GetFromJsonAsync<List<Diagnosis>>($"{Endpoints.DiagnosissEndpoint}");
+	}
+
+	async Task Delete(int diagnosisId)
+	{
+		if (Diagnosiss != null)
+		{
+			var Diagnosis = Diagnosiss.First(q => q.Id == diagnosisId);
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Diagnosis.DiagnosisID}?");
+			if (confirm)
+			{
+				await _client.DeleteAsync($"{Endpoints.DiagnosissEndpoint}/{diagnosisId}");
+				await OnInitializedAsync();
+			}
+		}
+	}
+}

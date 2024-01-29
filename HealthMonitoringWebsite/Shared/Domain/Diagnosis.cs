@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HealthMonitoringWebsite.Shared.Domain
 {
-    public class Diagnosis: BaseDomainModel
+    public class Diagnosis : BaseDomainModel
     {
         public int DiagnosisID { get; set; }
         public DateTime DiagnosisDate { get; set; }

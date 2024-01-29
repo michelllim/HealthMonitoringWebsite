@@ -1,0 +1,76 @@
+﻿@page "/Prescriptions/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Prescriptions</h3>
+<br />
+
+<a href="/Prescriptions/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Prescription
+</a>
+<br />
+<br />
+
+@if (Prescriptions == null)
+{
+	<div class="alert alert-info">Loading Prescriptions...</div>
+}
+else
+{
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Issue Date</th>
+				<th>Expiry Date</th>
+				<th>ConsultationID</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var prescription in Prescriptions)
+			{
+				<tr>
+					<td>@prescription.PIssueDate</td>
+					<td>@prescription.PExpiryDate</td>
+					<td>@prescription.Consultation</td>
+					<td>
+						<a href="/Prescriptions/view/@prescription.Id" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/Prescriptions/edit/@prescription.Id" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(()=>Delete(prescription.Id))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private List<Prescription>? Prescriptions;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
+	}
+
+	async Task Delete(int prescriptionId)
+	{
+		if (Prescriptions != null)
+		{
+			var prescription = Prescriptions.First(q => q.Id == prescriptionId);
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {prescription.PrescriptionID}?");
+			if (confirm)
+			{
+				await _client.DeleteAsync($"{Endpoints.PrescriptionsEndpoint}/{prescriptionId}");
+				await OnInitializedAsync();
+			}
+		}
+	}
+}

@@ -1,0 +1,18 @@
+﻿@page "/vitalsignsrecords/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View VitalSignsRecord</h3>
+
+<FormComponent vitalsignsrecord="vitalsignsrecord" Disabled="true" />
+
+@code {
+	[Parameter] public int id { get; set; }
+	VitalSignsRecord? vitalsignsrecord = new VitalSignsRecord();
+
+	protected async override Task OnParametersSetAsync()
+	{
+		vitalsignsrecord = await
+		_client.GetFromJsonAsync<VitalSignsRecord>($"{Endpoints.VitalSignsRecordsEndpoint}/{id}");
+	}
+}
