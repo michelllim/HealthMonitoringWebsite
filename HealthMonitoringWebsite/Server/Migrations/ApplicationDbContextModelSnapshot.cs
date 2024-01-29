@@ -295,7 +295,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AppointmentId")
+                    b.Property<int?>("AppointmentID")
                         .HasColumnType("int");
 
                     b.Property<string>("ConsultationContent")
@@ -328,6 +328,9 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("RecordID")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -336,7 +339,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppointmentId");
+                    b.HasIndex("AppointmentID");
 
                     b.HasIndex("VitalSignsRecordId");
 
@@ -357,7 +360,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.Property<string>("Conditions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ConsultationId")
+                    b.Property<int?>("ConsultationID")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -386,7 +389,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConsultationId");
+                    b.HasIndex("ConsultationID");
 
                     b.ToTable("Diagnosiss");
                 });
@@ -461,6 +464,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -473,15 +477,18 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientBloodType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientContactNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PatientDateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PatientEmergencyContact")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientFamilyHistory")
@@ -494,10 +501,13 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PatientNRIC")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -515,7 +525,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ConsultationId")
+                    b.Property<int?>("ConsultationID")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -541,7 +551,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConsultationId");
+                    b.HasIndex("ConsultationID");
 
                     b.ToTable("Prescriptions");
                 });
@@ -680,10 +690,10 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.Property<int?>("OtherStepCount")
                         .HasColumnType("int");
 
-                    b.Property<float?>("Others")
-                        .HasColumnType("real");
+                    b.Property<string>("Others")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int?>("PatientID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RecordDate")
@@ -706,7 +716,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientID");
 
                     b.ToTable("VitalSignsRecord");
                 });
@@ -867,7 +877,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Appointment", "Appointment")
                         .WithMany()
-                        .HasForeignKey("AppointmentId");
+                        .HasForeignKey("AppointmentID");
 
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.VitalSignsRecord", "VitalSignsRecord")
                         .WithMany()
@@ -882,7 +892,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Consultation", "Consultation")
                         .WithMany()
-                        .HasForeignKey("ConsultationId");
+                        .HasForeignKey("ConsultationID");
 
                     b.Navigation("Consultation");
                 });
@@ -891,7 +901,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Consultation", "Consultation")
                         .WithMany()
-                        .HasForeignKey("ConsultationId");
+                        .HasForeignKey("ConsultationID");
 
                     b.Navigation("Consultation");
                 });
@@ -915,7 +925,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("PatientID");
 
                     b.Navigation("Patient");
                 });

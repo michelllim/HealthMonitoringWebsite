@@ -15,7 +15,7 @@
 		<div class="form-group">
 			<label>Time: </label>
 			<div>
-				<InputDate @bind-Value="@diagnosis.DiagnosisTime" class="form-control" />
+				<InputDate Type="InputDateType.Time" @bind-Value="@diagnosis.DiagnosisTime" class="form-control" />
 				<ValidationMessage For="@(() => diagnosis.DiagnosisTime)" />
 			</div>
 		</div>
@@ -47,17 +47,17 @@
 		<div class="form-group">
 			<label>ConsultationID: </label>
 			<div>
-				<InputSelect @bind-Value="diagnosis.Consultation" class="form-control">
+				<InputSelect @bind-Value="diagnosis.ConsultationID" class="form-control">
 					<option value="">-- Select Consultation --</option>
 					@if (Consultations != null)
 					{
 						foreach (var consultation in Consultations)
 						{
-							<option value="@consultation.Id">@consultation.ConsultationDate - @consultation.ConsultationID</option>
+							<option value="@consultation.Id">@consultation.ConsultationDate - @consultation.ConsultationContent</option>
 						}
 					}
 				</InputSelect>
-				<ValidationMessage For="@(() => diagnosis.Consultation)" />
+				<ValidationMessage For="@(() => diagnosis.ConsultationID)" />
 			</div>
 		</div>
 

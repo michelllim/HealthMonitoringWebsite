@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HealthMonitoringWebsite.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class newdb : Migration
+    public partial class newerDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -121,17 +121,17 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientID = table.Column<int>(type: "int", nullable: false),
-                    PatientName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PatientName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PatientDateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PatientGender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PatientNRIC = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PatientNRIC = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PatientFamilyHistory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PatientAllergies = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PatientBloodType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PatientBloodType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PatientAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PatientContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PatientEmergencyContact = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PatientContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PatientEmergencyContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -311,8 +311,8 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     OtherBloodGlucoseLevel = table.Column<int>(type: "int", nullable: true),
                     OtherBloodOxygenLevel = table.Column<int>(type: "int", nullable: true),
                     OtherStepCount = table.Column<int>(type: "int", nullable: true),
-                    Others = table.Column<float>(type: "real", nullable: true),
-                    PatientId = table.Column<int>(type: "int", nullable: true),
+                    Others = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PatientID = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -322,8 +322,8 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     table.PrimaryKey("PK_VitalSignsRecord", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VitalSignsRecord_Patients_PatientId",
-                        column: x => x.PatientId,
+                        name: "FK_VitalSignsRecord_Patients_PatientID",
+                        column: x => x.PatientID,
                         principalTable: "Patients",
                         principalColumn: "Id");
                 });
@@ -376,7 +376,8 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     ConsultationContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConsultationLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VitalSignsRecordId = table.Column<int>(type: "int", nullable: true),
-                    AppointmentId = table.Column<int>(type: "int", nullable: true),
+                    RecordID = table.Column<int>(type: "int", nullable: true),
+                    AppointmentID = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -386,8 +387,8 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     table.PrimaryKey("PK_Consultations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Consultations_Appointments_AppointmentId",
-                        column: x => x.AppointmentId,
+                        name: "FK_Consultations_Appointments_AppointmentID",
+                        column: x => x.AppointmentID,
                         principalTable: "Appointments",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -409,7 +410,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     BodyPart = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Symptoms = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Conditions = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConsultationId = table.Column<int>(type: "int", nullable: true),
+                    ConsultationID = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -419,8 +420,8 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     table.PrimaryKey("PK_Diagnosiss", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Diagnosiss_Consultations_ConsultationId",
-                        column: x => x.ConsultationId,
+                        name: "FK_Diagnosiss_Consultations_ConsultationID",
+                        column: x => x.ConsultationID,
                         principalTable: "Consultations",
                         principalColumn: "Id");
                 });
@@ -434,7 +435,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     PrescriptionID = table.Column<int>(type: "int", nullable: false),
                     PIssueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ConsultationId = table.Column<int>(type: "int", nullable: true),
+                    ConsultationID = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -444,8 +445,8 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     table.PrimaryKey("PK_Prescriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Prescriptions_Consultations_ConsultationId",
-                        column: x => x.ConsultationId,
+                        name: "FK_Prescriptions_Consultations_ConsultationID",
+                        column: x => x.ConsultationID,
                         principalTable: "Consultations",
                         principalColumn: "Id");
                 });
@@ -532,9 +533,9 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consultations_AppointmentId",
+                name: "IX_Consultations_AppointmentID",
                 table: "Consultations",
-                column: "AppointmentId");
+                column: "AppointmentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Consultations_VitalSignsRecordId",
@@ -553,9 +554,9 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Diagnosiss_ConsultationId",
+                name: "IX_Diagnosiss_ConsultationID",
                 table: "Diagnosiss",
-                column: "ConsultationId");
+                column: "ConsultationID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Keys_Use",
@@ -593,14 +594,14 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 column: "PrescriptionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prescriptions_ConsultationId",
+                name: "IX_Prescriptions_ConsultationID",
                 table: "Prescriptions",
-                column: "ConsultationId");
+                column: "ConsultationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VitalSignsRecord_PatientId",
+                name: "IX_VitalSignsRecord_PatientID",
                 table: "VitalSignsRecord",
-                column: "PatientId");
+                column: "PatientID");
         }
 
         /// <inheritdoc />

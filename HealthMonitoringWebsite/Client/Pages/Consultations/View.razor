@@ -11,12 +11,12 @@
 	Consultation? consultation = new Consultation();
 
 	private IList<VitalSignsRecord>? VitalSignsRecords;
-	//private IList<Appointment>? Appointments;
+	private IList<Appointment>? Appointments;
 
 	protected async override Task OnInitializedAsync()
 	{
 		VitalSignsRecords = await _client.GetFromJsonAsync<List<VitalSignsRecord>>($"{Endpoints.VitalSignsRecordsEndpoint}");
-		// Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+	    Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
 	}
 
 	protected async override Task OnParametersSetAsync()

@@ -10,6 +10,13 @@
 	[Parameter] public int id { get; set; }
 	VitalSignsRecord? vitalsignsrecord = new VitalSignsRecord();
 
+	private IList<Patient>? Patients;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Patients = await _client.GetFromJsonAsync<List<Patient>>($"{Endpoints.PatientsEndpoint}");
+	}
+	
 	protected async override Task OnParametersSetAsync()
 	{
 		vitalsignsrecord = await

@@ -34,17 +34,17 @@
 		<div class="form-group">
 			<label>ConsultationID: </label>
 			<div>
-				<InputSelect @bind-Value="prescription.Consultation" class="form-control">
+				<InputSelect @bind-Value="prescription.ConsultationID" class="form-control">
 					<option value="">-- Select Consultation --</option>
 					@if (Consultations != null)
 					{
 						foreach (var consultation in Consultations)
 						{
-							<option value="@consultation.Id">@consultation.ConsultationDate - @consultation.ConsultationID</option>
+							<option value="@consultation.Id">@consultation.ConsultationDate - @consultation.ConsultationContent</option>
 						}
 					}
 				</InputSelect>
-				<ValidationMessage For="@(() => prescription.Consultation)" />
+				<ValidationMessage For="@(() => prescription.ConsultationID)" />
 			</div>
 		</div>
 

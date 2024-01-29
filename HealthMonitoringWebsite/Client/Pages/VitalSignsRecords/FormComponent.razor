@@ -1,4 +1,6 @@
-﻿<EditForm Model="@vitalsignsrecord" OnValidSubmit="@OnValidSubmit">
+﻿@inject HttpClient _client
+
+<EditForm Model="@vitalsignsrecord" OnValidSubmit="@OnValidSubmit">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
 	<fieldset disabled="@Disabled">
@@ -13,7 +15,7 @@
 		<div class="form-group">
 			<label>Time: </label>
 			<div>
-				<InputDate @bind-Value="@vitalsignsrecord.RecordTime" class="form-control" />
+				<InputDate Type="InputDateType.Time" @bind-Value="@vitalsignsrecord.RecordTime" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.RecordTime)" />
 			</div>
 		</div>
@@ -101,10 +103,28 @@
 		<div class="form-group">
 			<label>Others: </label>
 			<div>
-				<InputNumber @bind-Value="@vitalsignsrecord.Others" class="form-control" />
+				<InputText @bind-Value="@vitalsignsrecord.Others" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.Others)" />
 			</div>
 		</div>
+
+		<div class="form-group">
+				<label>PatientID: </label>
+				<div>
+				<InputSelect @bind-Value="vitalsignsrecord.PatientID" class="form-control">
+						<option value="">-- Select Patient --</option>
+						@if (Patients != null)
+						{
+							foreach (var patient in Patients)
+							{
+								<option value="@patient.Id">@patient.PatientName - @patient.PatientNRIC</option>
+							}
+						}
+					</InputSelect>
+					<ValidationMessage For="@(() => vitalsignsrecord.PatientID)" />
+				</div>
+			</div>
+
 	</fieldset>
 
 	@if (!Disabled)
@@ -122,4 +142,11 @@
 	[Parameter] public string ButtonText { get; set; } = "Save";
 	[Parameter] public EventCallback OnValidSubmit { get; set; }
 	[Parameter] public bool Disabled { get; set; } = false;
+
+	private IList<Patient>? Patients;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Patients = await _client.GetFromJsonAsync<List<Patient>>($"{Endpoints.PatientsEndpoint}");
+	}
 }

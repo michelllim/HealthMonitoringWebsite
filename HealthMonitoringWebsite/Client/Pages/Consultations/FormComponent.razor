@@ -15,7 +15,7 @@
 		<div class="form-group">
 			<label>Start Time: </label>
 			<div>
-				<InputDate @bind-Value="@consultation.ConsultationStartTime" class="form-control" />
+				<InputDate Type="InputDateType.Time" @bind-Value="@consultation.ConsultationStartTime" class="form-control" />
 				<ValidationMessage For="@(() => consultation.ConsultationStartTime)" />
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 		<div class="form-group">
 			<label>End Time: </label>
 			<div>
-				<InputDate @bind-Value="@consultation.ConsultationEndTime" class="form-control" />
+				<InputDate Type="InputDateType.Time" @bind-Value="@consultation.ConsultationEndTime" class="form-control" />
 				<ValidationMessage For="@(() => consultation.ConsultationEndTime)" />
 			</div>
 		</div>
@@ -55,35 +55,35 @@
 		<div class="form-group">
 			<label>RecordID: </label>
 			<div>
-				<InputSelect @bind-Value="consultation.VitalSignsRecord" class="form-control">
+				<InputSelect @bind-Value="consultation.RecordID" class="form-control">
 					<option value="">-- Select Record --</option>
 					@if (VitalSignsRecords != null)
 					{
 						foreach (var vitalsignsrecord in VitalSignsRecords)
 						{
-							<option value="@vitalsignsrecord.Id">@vitalsignsrecord.RecordDate - @vitalsignsrecord.RecordID</option>
+							<option value="@vitalsignsrecord.Id">@vitalsignsrecord.RecordDate - @vitalsignsrecord.Patient</option>
 						}
 					}
 				</InputSelect>
-				<ValidationMessage For="@(() => consultation.VitalSignsRecord)" />
+				<ValidationMessage For="@(() => consultation.RecordID)" />
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label>AppointmentID: </label>
-@* 			<div>
-				<InputSelect @bind-Value="consultation.Appointment" class="form-control">
+ 			<div>
+				<InputSelect @bind-Value="consultation.AppointmentID" class="form-control">
 					<option value="">-- Select Appointment --</option>
 					@if (Appointments != null)
 					{
 						foreach (var appointment in Appointments)
 						{
-							<option value="@appointment.Id">@appointment.AppointmentDate - @appointment.AppointmentID</option>
+							<option value="@appointment.Id">@appointment.AppointmentDate - @appointment.Patient</option>
 						}
 					}
 				</InputSelect>
-				<ValidationMessage For="@(() => consultation.Appointment)" />
-			</div> *@
+				<ValidationMessage For="@(() => consultation.AppointmentID)" />
+			</div>
 		</div>
 
 	</fieldset>
@@ -105,11 +105,11 @@
 	[Parameter] public bool Disabled { get; set; } = false;
 
 	private IList<VitalSignsRecord>? VitalSignsRecords;
-	//private IList<Appointment>? Appointments;
+	private IList<Appointment>? Appointments;
 
 	protected async override Task OnInitializedAsync()
 	{
 		VitalSignsRecords = await _client.GetFromJsonAsync<List<VitalSignsRecord>>($"{Endpoints.VitalSignsRecordsEndpoint}");
-		// Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+		Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
 	}
 }
