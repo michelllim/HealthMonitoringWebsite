@@ -1,0 +1,98 @@
+﻿@page "/appointments/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@* @implements IDisposable *@
+
+
+<h3 class="card-title">Appointments</h3>
+<br />
+
+<a href="/appointments/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Appointments
+</a>
+<br />
+<br />
+
+@if (Appointments == null)
+{
+    <div class="alert alert-info">Loading Appointments...</div>
+}
+
+else
+{
+    <table class="table table-responsive" id="appointmentsTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Type</th>
+                <th>Confirmation</th>
+                <th>StaffID</th>
+                <th>PatientID</th>
+                <th>Actions</th>
+
+                @* <th>Password</th> *@
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Appointments)
+            {
+                <tr>
+                    <td>@appointment.AppointmentDate</td>
+                    <td>@appointment.AppointmentStartTime</td>
+                    <td>@appointment.AppointmentEndTime</td>
+                    <td>@appointment.AppointmentType</td>
+                    <td>@appointment.AppointmentConfirmation</td>
+                    <td>@appointment.StaffID</td>
+                    <td>@appointment.PatientID</td>
+
+
+                    <td>
+                        <a href="/appointments/view/@appointment.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/appointments/edit/@appointment.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(appointment.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<Appointment>? Appointments;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+    }
+
+    async Task Delete(int appointmentId)
+    {
+        if (Appointments != null)
+        {
+            var appointment = Appointments.First(q => q.Id == appointmentId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {appointment.AppointmentID}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.AppointmentsEndpoint}/{appointmentId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+    // public void Dispose()
+    // {
+    //     _interceptor.DisposeEvent();
+    // }
+
+}

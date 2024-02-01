@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HealthMonitoringWebsite.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class newerDB : Migration
+    public partial class newdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -170,11 +170,11 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StaffID = table.Column<int>(type: "int", nullable: false),
-                    StaffName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StaffContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StaffRole = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StaffName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    StaffContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StaffRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffSpecialization = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -340,8 +340,8 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     AppointmentEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AppointmentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AppointmentConfirmation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StaffId = table.Column<int>(type: "int", nullable: true),
-                    PatientId = table.Column<int>(type: "int", nullable: true),
+                    StaffID = table.Column<int>(type: "int", nullable: false),
+                    PatientID = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -351,15 +351,16 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Patients_PatientId",
-                        column: x => x.PatientId,
+                        name: "FK_Appointments_Patients_PatientID",
+                        column: x => x.PatientID,
                         principalTable: "Patients",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Appointments_Staffs_StaffId",
-                        column: x => x.StaffId,
+                        name: "FK_Appointments_Staffs_StaffID",
+                        column: x => x.StaffID,
                         principalTable: "Staffs",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -459,10 +460,10 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PrescriptionItemID = table.Column<int>(type: "int", nullable: false),
                     PDosage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PDuration = table.Column<TimeSpan>(type: "time", nullable: true),
+                    PDuration = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PRefill = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PrescriptionId = table.Column<int>(type: "int", nullable: true),
-                    MedicineId = table.Column<int>(type: "int", nullable: true),
+                    PrescriptionID = table.Column<int>(type: "int", nullable: true),
+                    MedicineID = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -472,26 +473,26 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     table.PrimaryKey("PK_PrescriptionItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PrescriptionItems_Medicines_MedicineId",
-                        column: x => x.MedicineId,
+                        name: "FK_PrescriptionItems_Medicines_MedicineID",
+                        column: x => x.MedicineID,
                         principalTable: "Medicines",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_PrescriptionItems_Prescriptions_PrescriptionId",
-                        column: x => x.PrescriptionId,
+                        name: "FK_PrescriptionItems_Prescriptions_PrescriptionID",
+                        column: x => x.PrescriptionID,
                         principalTable: "Prescriptions",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_PatientId",
+                name: "IX_Appointments_PatientID",
                 table: "Appointments",
-                column: "PatientId");
+                column: "PatientID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_StaffId",
+                name: "IX_Appointments_StaffID",
                 table: "Appointments",
-                column: "StaffId");
+                column: "StaffID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -584,14 +585,14 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PrescriptionItems_MedicineId",
+                name: "IX_PrescriptionItems_MedicineID",
                 table: "PrescriptionItems",
-                column: "MedicineId");
+                column: "MedicineID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PrescriptionItems_PrescriptionId",
+                name: "IX_PrescriptionItems_PrescriptionID",
                 table: "PrescriptionItems",
-                column: "PrescriptionId");
+                column: "PrescriptionID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_ConsultationID",

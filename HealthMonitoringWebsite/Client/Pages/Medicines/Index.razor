@@ -1,0 +1,109 @@
+﻿@page "/medicines/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@* @implements IDisposable *@
+
+
+<h3 class="card-title">Medicines</h3>
+<br />
+
+<a href="/medicines/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Medicines
+</a>
+<br />
+<br />
+
+@if (Medicines == null)
+{
+    <div class="alert alert-info">Loading Medicines...</div>
+}
+
+else
+{
+    <table class="table table-responsive" id="medicinesTable">
+        <thead>
+            <tr>
+                <th>MedicineId</th>
+                <th>Name</th>
+                <th>Strength</th>
+                <th>Type</th>
+                <th>Ingredients</th>
+                <th>Total Amount</th>
+                <th>Instructions</th>
+                <th>Purpose</th>
+                <th>Expiry Date</th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var medicine in Medicines)
+            {
+                <tr>
+                    <td>@medicine.MedicineID</td>
+                    <td>@medicine.MName</td>
+                    <td>@medicine.MStrength</td>
+                    <td>@medicine.MType</td>
+                    <td>@medicine.MIngredients</td>
+                    <td>@medicine.MTotalAmount</td>
+                    <td>@medicine.MInstructions</td>
+                    <td>@medicine.MPurpose</td>
+                    <td>@medicine.MExpiryDate</td>
+
+                    <td>
+                        <a href="/medicines/view/@medicine.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/medicines/edit/@medicine.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(medicine.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<Medicine>? Medicines;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Medicines = await _client.GetFromJsonAsync<List<Medicine>>($"{Endpoints.MedicinesEndpoint}");
+    }
+
+    // protected async override Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     await js.InvokeVoidAsync("AddDataTable", "#medicinesTable");
+    // }
+
+    // public void Dispose()
+    // {
+    //     js.InvokeVoidAsync("DataTablesDispose", "#medicinesTable");
+    // }
+
+    async Task Delete(int medicineId)
+    {
+        if (Medicines != null)
+        {
+            var medicine = Medicines.First(q => q.Id == medicineId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {medicine.MName}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.MedicinesEndpoint}/{medicineId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+    // public void Dispose()
+    // {
+    //     _interceptor.DisposeEvent();
+    // }
+
+}

@@ -1,0 +1,89 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@medicine" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+		<div class="form-group">
+			<label>Name: </label>
+			<div>
+				<InputText @bind-Value="@medicine.MName" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MName)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Strength: </label>
+			<div>
+				<InputText @bind-Value="@medicine.MStrength" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MStrength)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Type: </label>
+			<div>
+				<InputText @bind-Value="@medicine.MType" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MType)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Ingredients: </label>
+			<div>
+				<InputText @bind-Value="@medicine.MIngredients" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MIngredients)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Total Amount: </label>
+			<div>
+				<InputNumber @bind-Value="@medicine.MTotalAmount" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MTotalAmount)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Instructions: </label>
+			<div>
+				<InputText @bind-Value="@medicine.MInstructions" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MInstructions)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Purpose: </label>
+			<div>
+				<InputText @bind-Value="@medicine.MPurpose" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MPurpose)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Expiry Date: </label>
+			<div>
+				<InputDate @bind-Value="@medicine.MExpiryDate" class="form-control" />
+				<ValidationMessage For="@(() => medicine.MExpiryDate)" />
+			</div>
+		</div>
+
+	</fieldset>
+
+	@if (!Disabled)
+	{
+		<button type="submit" class="btn btn-success btn-block">
+			@ButtonText
+		</button>
+	}
+
+	<BackToList Target="medicines" />
+</EditForm>
+
+@code {
+	[Parameter] public Medicine? medicine { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	[Parameter] public bool Disabled { get; set; } = false;
+
+}

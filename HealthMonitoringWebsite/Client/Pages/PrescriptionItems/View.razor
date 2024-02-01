@@ -1,0 +1,29 @@
+﻿@page "/prescriptionItems/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Prescription Item</h3>
+
+<FormComponent prescriptionItem="prescriptionItem" Disabled="true" />
+
+@code {
+	[Parameter] public int id { get; set; }
+	PrescriptionItem? prescriptionItem = new PrescriptionItem();
+
+	private IList<Prescription>? Prescriptions;
+	private IList<Medicine>? Medicines;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
+		Medicines = await _client.GetFromJsonAsync<List<Medicine>>($"{Endpoints.MedicinesEndpoint}");
+	}
+
+	protected async override Task OnParametersSetAsync()
+	{
+		prescriptionItem = await
+		_client.GetFromJsonAsync<PrescriptionItem>($"{Endpoints.PrescriptionItemsEndpoint}/{id}");
+	}
+
+
+}

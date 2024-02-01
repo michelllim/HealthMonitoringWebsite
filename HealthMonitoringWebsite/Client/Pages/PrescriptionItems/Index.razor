@@ -1,0 +1,81 @@
+﻿@page "/prescriptionItems/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+
+<h3 class="card-title">Prescription Items</h3>
+<br />
+
+<a href="/prescriptionItems/create/" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Prescription Item
+</a>
+<br />
+<br />
+
+@if (PrescriptionItems == null)
+{
+	<div class="alert alert-info">Loading Prescription Items...</div>
+}
+else
+{
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Dosage</th>
+				<th>Duration</th>
+				<th>Refill</th>
+				<th>PrescriptionID</th>
+				<th>Medicine ID</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var prescriptionItem in PrescriptionItems)
+			{
+				<tr>
+					<td>@prescriptionItem.PDosage</td>
+					<td>@prescriptionItem.PDuration</td>
+					<td>@prescriptionItem.PRefill</td>
+					<td>@prescriptionItem.PrescriptionID</td>
+					<td>@prescriptionItem.MedicineID</td>
+					<td>
+						<a href="/prescriptionItems/view/@prescriptionItem.Id" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/prescriptionItems/edit/@prescriptionItem.Id" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(()=>Delete(prescriptionItem.Id))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private List<PrescriptionItem>? PrescriptionItems;
+
+	protected async override Task OnInitializedAsync()
+	{
+		PrescriptionItems = await _client.GetFromJsonAsync<List<PrescriptionItem>>($"{Endpoints.PrescriptionItemsEndpoint}");
+	}
+
+	async Task Delete(int prescriptionItemId)
+	{
+		if (PrescriptionItems != null)
+		{
+			var prescriptionItem = PrescriptionItems.First(q => q.Id == prescriptionItemId);
+			var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {prescriptionItem.PrescriptionItemID}?");
+			if (confirm)
+			{
+				await _client.DeleteAsync($"{Endpoints.PrescriptionItemsEndpoint}/{prescriptionItemId}");
+				await OnInitializedAsync();
+			}
+		}
+	}
+}

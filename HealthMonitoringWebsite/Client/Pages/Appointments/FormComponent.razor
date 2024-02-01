@@ -1,0 +1,107 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@appointment" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+		<div class="form-group">
+			<label>Date: </label>
+			<div>
+				<InputDate @bind-Value="@appointment.AppointmentDate" class="form-control" />
+				<ValidationMessage For="@(() => appointment.AppointmentDate)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Start Time: </label>
+			<div>
+				<InputDate Type="InputDateType.Time" @bind-Value="@appointment.AppointmentStartTime" class="form-control" />
+				<ValidationMessage For="@(() => appointment.AppointmentStartTime)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>End Time: </label>
+			<div>
+				<InputDate Type="InputDateType.Time" @bind-Value="@appointment.AppointmentEndTime" class="form-control" />
+				<ValidationMessage For="@(() => appointment.AppointmentEndTime)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Type: </label>
+			<div>
+				<InputText @bind-Value="@appointment.AppointmentType" class="form-control" />
+				<ValidationMessage For="@(() => appointment.AppointmentType)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Confirmation: </label>
+			<div>
+				<InputText @bind-Value="@appointment.AppointmentConfirmation" class="form-control" />
+				<ValidationMessage For="@(() => appointment.AppointmentConfirmation)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>StaffID: </label>
+			<div>
+				<InputSelect @bind-Value="appointment.StaffID" class="form-control">
+					<option value="">-- Select Staff --</option>
+					@if (Staffs != null)
+					{
+						foreach (var staff in Staffs)
+						{
+							<option value="@staff.Id">@staff.StaffName - @staff.StaffRole</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => appointment.StaffID)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>PatientID: </label>
+			<div>
+				<InputSelect @bind-Value="appointment.PatientID" class="form-control">
+					<option value="">-- Select Patient --</option>
+					@if (Patients != null)
+					{
+						foreach (var patient in Patients)
+						{
+							<option value="@patient.Id">@patient.PatientName - @patient.PatientContactNumber</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => appointment.PatientID)" />
+			</div>
+		</div>
+
+	</fieldset>
+
+	@if (!Disabled)
+	{
+		<button type="submit" class="btn btn-success btn-block">
+			@ButtonText
+		</button>
+	}
+
+	<BackToList Target="appointments" />
+</EditForm>
+
+@code {
+	[Parameter] public Appointment? appointment { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	[Parameter] public bool Disabled { get; set; } = false;
+
+	private IList<Patient>? Patients;
+	private IList<Staff>? Staffs;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Patients = await _client.GetFromJsonAsync<List<Patient>>($"{Endpoints.PatientsEndpoint}");
+		Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+	}
+}

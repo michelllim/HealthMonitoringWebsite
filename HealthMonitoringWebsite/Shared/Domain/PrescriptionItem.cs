@@ -11,10 +11,12 @@ namespace HealthMonitoringWebsite.Shared.Domain
     {
         public int PrescriptionItemID { get; set; }
         public string? PDosage { get; set; }
-        public TimeSpan? PDuration { get; set; }
+        public string? PDuration { get; set; }
         public string? PRefill { get; set; }
         public virtual Prescription? Prescription { get; set; }
-        public virtual Medicine? Medicine { get; set; }
+		public int? PrescriptionID { get; set; }
+		public virtual Medicine? Medicine { get; set; }
+		public int? MedicineID { get; set; }
 
-    }
+	}
 }

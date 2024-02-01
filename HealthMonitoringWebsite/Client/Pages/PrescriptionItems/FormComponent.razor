@@ -1,0 +1,92 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@prescriptionItem" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<fieldset disabled="@Disabled">
+		<div class="form-group">
+			<label>Dosage: </label>
+			<div>
+				<InputText @bind-Value="@prescriptionItem.PDosage" class="form-control" />
+				<ValidationMessage For="@(() => prescriptionItem.PDosage)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Duration: </label>
+			<div>
+				<InputText @bind-Value="@prescriptionItem.PDuration" class="form-control" />
+				<ValidationMessage For="@(() => prescriptionItem.PDuration)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>Refill: </label>
+			<div>
+				<InputText @bind-Value="@prescriptionItem.PRefill" class="form-control" />
+				<ValidationMessage For="@(() => prescriptionItem.PRefill)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>PrescriptionID: </label>
+			<div>
+				<InputSelect @bind-Value="prescriptionItem.PrescriptionID" class="form-control">
+					<option value="">-- Select Prescription --</option>
+					@if (Prescriptions != null)
+					{
+						foreach (var prescription in Prescriptions)
+						{
+							<option value="@prescription.Id">@prescription.PIssueDate - @prescription.PrescriptionID</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => prescriptionItem.PrescriptionID)" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>MedicineID: </label>
+			<div>
+				<InputSelect @bind-Value="prescriptionItem.MedicineID" class="form-control">
+					<option value="">-- Select Medicine --</option>
+					@if (Medicines != null)
+					{
+						foreach (var medicine in Medicines)
+						{
+							<option value="@medicine.Id">@medicine.MName - @medicine.MPurpose</option>
+						}
+					}
+				</InputSelect>
+				<ValidationMessage For="@(() => prescriptionItem.MedicineID)" />
+			</div>
+		</div>
+
+	</fieldset>
+
+	@if (!Disabled)
+	{
+		<button type="submit" class="btn btn-success btn-block">
+			@ButtonText
+		</button>
+	}
+
+	<BackToList Target="prescriptionItems" />
+</EditForm>
+
+@code {
+	[Parameter] public PrescriptionItem? prescriptionItem { get; set; }
+	[Parameter] public string ButtonText { get; set; } = "Save";
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+	[Parameter] public bool Disabled { get; set; } = false;
+
+	private IList<Prescription>? Prescriptions;
+	private IList<Medicine>? Medicines;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
+		Medicines = await _client.GetFromJsonAsync<List<Medicine>>($"{Endpoints.MedicinesEndpoint}");
+	}
+
+}

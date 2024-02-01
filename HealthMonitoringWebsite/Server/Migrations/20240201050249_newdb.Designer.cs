@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthMonitoringWebsite.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240129033013_newerDB")]
-    partial class newerDB
+    [Migration("20240201050249_newdb")]
+    partial class newdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,10 +272,10 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int?>("PatientID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StaffId")
+                    b.Property<int>("StaffID")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -283,9 +283,9 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientID");
 
-                    b.HasIndex("StaffId");
+                    b.HasIndex("StaffID");
 
                     b.ToTable("Appointments");
                 });
@@ -576,19 +576,19 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MedicineId")
+                    b.Property<int?>("MedicineID")
                         .HasColumnType("int");
 
                     b.Property<string>("PDosage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan?>("PDuration")
-                        .HasColumnType("time");
+                    b.Property<string>("PDuration")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PRefill")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PrescriptionId")
+                    b.Property<int?>("PrescriptionID")
                         .HasColumnType("int");
 
                     b.Property<int>("PrescriptionItemID")
@@ -599,9 +599,9 @@ namespace HealthMonitoringWebsite.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicineId");
+                    b.HasIndex("MedicineID");
 
-                    b.HasIndex("PrescriptionId");
+                    b.HasIndex("PrescriptionID");
 
                     b.ToTable("PrescriptionItems");
                 });
@@ -624,21 +624,26 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StaffContactNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StaffID")
                         .HasColumnType("int");
 
                     b.Property<string>("StaffName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("StaffRole")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StaffSpecialization")
@@ -865,11 +870,13 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("PatientID");
 
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Staff", "Staff")
                         .WithMany("Appointments")
-                        .HasForeignKey("StaffId");
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Patient");
 
@@ -913,11 +920,11 @@ namespace HealthMonitoringWebsite.Server.Migrations
                 {
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Medicine", "Medicine")
                         .WithMany()
-                        .HasForeignKey("MedicineId");
+                        .HasForeignKey("MedicineID");
 
                     b.HasOne("HealthMonitoringWebsite.Shared.Domain.Prescription", "Prescription")
                         .WithMany()
-                        .HasForeignKey("PrescriptionId");
+                        .HasForeignKey("PrescriptionID");
 
                     b.Navigation("Medicine");
 
