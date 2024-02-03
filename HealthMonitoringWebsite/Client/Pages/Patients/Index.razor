@@ -1,10 +1,9 @@
-﻿@page "/Patients/"
-@using HealthMonitoringWebsite.Client.Services
+﻿@implements IDisposable
+@page "/Patients/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 @inject HttpInterceptorService _interceptor
-@implements IDisposable
 
 <h3 class="card-title">Patients</h3>
 <br />
@@ -22,7 +21,7 @@
 }
 else
 {
-	<table class="table table-responsive">
+	<table class="table table-responsive" id="patientsTable">
 		<thead>
 			<tr>
 				<th>Full Name</th>
@@ -94,8 +93,13 @@ else
 		}
 	}
 
+	protected async override Task OnAfterRenderAsync(bool firstRender)
+	{
+		await js.InvokeVoidAsync("AddDataTable", "#patientsTable");
+	}
+
 	public void Dispose()
 	{
-		_interceptor.DisposeEvent();
+		js.InvokeVoidAsync("DataTablesDispose", "#patientsTable");
 	}
 }

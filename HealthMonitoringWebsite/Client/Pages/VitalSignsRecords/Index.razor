@@ -1,7 +1,9 @@
-﻿@page "/VitalSignsRecords/"
+﻿@implements IDisposable
+@page "/VitalSignsRecords/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject HttpInterceptorService _interceptor
 
 <h3 class="card-title">Vital Signs Records</h3>
 <br />
@@ -19,7 +21,7 @@
 }
 else
 {
-	<table class="table table-responsive">
+	<table class="table table-responsive" id="recordsTable">
 		<thead>
 			<tr>
 				<th>Date</th>
@@ -79,6 +81,7 @@ else
 
 	protected async override Task OnInitializedAsync()
 	{
+		_interceptor.MonitorEvent();
 		VitalSignsRecords = await _client.GetFromJsonAsync<List<VitalSignsRecord>>($"{Endpoints.VitalSignsRecordsEndpoint}");
 	}
 
@@ -94,5 +97,16 @@ else
 				await OnInitializedAsync();
 			}
 		}
+	}
+
+
+	protected async override Task OnAfterRenderAsync(bool firstRender)
+	{
+		await js.InvokeVoidAsync("AddDataTable", "#recordsTable");
+	}
+
+	public void Dispose()
+	{
+		js.InvokeVoidAsync("DataTablesDispose", "#recordsTable");
 	}
 }
