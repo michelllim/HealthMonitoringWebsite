@@ -1,8 +1,9 @@
-﻿@page "/appointments/"
+﻿@implements IDisposable
+@page "/appointments/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
-@* @implements IDisposable *@
+@inject HttpInterceptorService _interceptor
 
 
 <h3 class="card-title">Appointments</h3>
@@ -74,6 +75,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
     }
 
@@ -90,9 +92,14 @@ else
             }
         }
     }
-    // public void Dispose()
-    // {
-    //     _interceptor.DisposeEvent();
-    // }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#appointmentsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#appointmentsTable");
+    }
 
 }

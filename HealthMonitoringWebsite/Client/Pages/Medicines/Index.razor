@@ -1,8 +1,9 @@
-﻿@page "/medicines/"
+﻿@implements IDisposable
+@page "/medicines/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
-@* @implements IDisposable *@
+@inject HttpInterceptorService _interceptor 
 
 
 <h3 class="card-title">Medicines</h3>
@@ -75,18 +76,9 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Medicines = await _client.GetFromJsonAsync<List<Medicine>>($"{Endpoints.MedicinesEndpoint}");
     }
-
-    // protected async override Task OnAfterRenderAsync(bool firstRender)
-    // {
-    //     await js.InvokeVoidAsync("AddDataTable", "#medicinesTable");
-    // }
-
-    // public void Dispose()
-    // {
-    //     js.InvokeVoidAsync("DataTablesDispose", "#medicinesTable");
-    // }
 
     async Task Delete(int medicineId)
     {
@@ -101,9 +93,14 @@ else
             }
         }
     }
-    // public void Dispose()
-    // {
-    //     _interceptor.DisposeEvent();
-    // }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#medicinesTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#medicinesTable");
+    }
 
 }
