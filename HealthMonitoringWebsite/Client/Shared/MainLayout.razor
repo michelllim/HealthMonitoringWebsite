@@ -17,7 +17,7 @@
 
 <div class="page">
     @* <div class="sidebar">
-        <NavMenu />
+    <NavMenu />
     </div> *@
     <style>
         .navbar {
@@ -32,20 +32,20 @@
             justify-content: center;
         }
 
-        .nav-scrollable nav {
-            display: flex;
-            flex-wrap: wrap;
-        }
+            .nav-scrollable nav {
+                display: flex;
+                flex-wrap: wrap;
+            }
 
         /* Style for the navigation links */
         /* .nav-item {
-            margin-right: 20px;
-        } */
+                    margin-right: 20px;
+                } */
 
         /* Style for the dropdown container */
         .dropdown {
             position: relative;
-            display: inline-block; 
+            display: inline-block;
         }
 
         /* Style for the dropdown content */
@@ -60,67 +60,66 @@
             color: black;
         }
 
-        /* Style for dropdown links */
-        .dropdown-content a {
-            color: lightcyan;
-            padding: 12px 0px;
-            text-decoration: none;
-            display: block;
-            width: 120px;
-        }
+            /* Style for dropdown links */
+            .dropdown-content a {
+                color: lightcyan;
+                padding: 12px 0px;
+                text-decoration: none;
+                display: block;
+                width: 120px;
+            }
 
-        /* Change color on hover */
-        .dropdown-content a:hover {
-            background-color: grey;
-        }
+                /* Change color on hover */
+                .dropdown-content a:hover {
+                    background-color: grey;
+                }
 
         /* Show the dropdown content when the mouse is over the dropdown container */
         .dropdown:hover .dropdown-content {
             display: block;
         }
     </style>
-        
 
-        <div style="right: 100px; position: absolute;">
-            <a href="" class="nav-link" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </a>
-        </div>
+
+    <div style="right: 100px; position: absolute;">
+        <a href="" class="nav-link" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Home
+        </a>
+    </div>
 
     <div class="top-row px-4 auth">
-        <LoginDisplay/>
-@*             @if (isAdmin)
-            { *@
-                <div class="nav-link dropdown">
-                    Member
-                    <div class="dropdown-content">
-                        <a href="staffs">Staff</a>
-                        <a href="patients">Patient</a>
-                    </div>
-                </div>
-@*             } *@
+        <LoginDisplay />
 
-            <a href="appointments" NavLink class="nav-link">Appointments</a>
-            <a href="consultations" NavLink class="nav-link">Consultations</a>
-            <a href="diagnosiss" NavLink class="nav-link">Diagnoses</a>
-            <a href="vitalsignsrecords" NavLink class="nav-link">Analysis</a>
-
-            <div class="nav-link dropdown">
-                Prescription
-                <div NavLink class="dropdown-content">
-                    <a href="prescriptions">Prescription</a>
-                    <a href="prescriptionItems">Prescription Item</a>
-                </div>
+        <div class="nav-link dropdown">
+            Member
+            <div class="dropdown-content">
+                <a href="staffs">Staff</a>
+                <a href="patients">Patient</a>
             </div>
+        </div>
 
-            <a href="medicines" class="nav-link">Medicine</a>
+
+        <a href="appointments" NavLink class="nav-link">Appointments</a>
+        <a href="consultations" NavLink class="nav-link">Consultations</a>
+        <a href="diagnosiss" NavLink class="nav-link">Diagnoses</a>
+        <a href="vitalsignsrecords" NavLink class="nav-link">Analysis</a>
+
+        <div class="nav-link dropdown">
+            Prescription
+            <div NavLink class="dropdown-content">
+                <a href="prescriptions">Prescription</a>
+                <a href="prescriptionItems">Prescription Item</a>
+            </div>
+        </div>
+
+        <a href="medicines" class="nav-link">Medicine</a>
         <a href="resourceLibrary" class="nav-link">Resource Library</a>
-        </div>
+    </div>
 
-        </div>
-        <article class="content px-4">
-            @Body
-        </article>
+</div>
+<article class="content px-4">
+    @Body
+</article>
 <!-- Content above this section -->
 
 <div class="bottom-section">
@@ -137,24 +136,24 @@
             padding: 10px;
         }
 
-        .bottom-section-column h3 {
-            text-align: center;
-        }
+            .bottom-section-column h3 {
+                text-align: center;
+            }
 
-        .bottom-section-column ul {
-            list-style-type: none;
-            padding: 0;
-            text-align: left;
-        }
+            .bottom-section-column ul {
+                list-style-type: none;
+                padding: 0;
+                text-align: left;
+            }
 
-        .bottom-section-column ul li {
-            margin-bottom: 10px;
-        }
+                .bottom-section-column ul li {
+                    margin-bottom: 10px;
+                }
 
-        .bottom-section-column a {
-            text-decoration: none;
-            color: #013220;
-        }
+            .bottom-section-column a {
+                text-decoration: none;
+                color: #013220;
+            }
     </style>
     <div class="bottom-section-column">
         <h3>Our Us</h3>
