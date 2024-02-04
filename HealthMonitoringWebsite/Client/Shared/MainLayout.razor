@@ -1,13 +1,172 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
+    @* <div class="sidebar">
         <NavMenu />
-    </div>
+    </div> *@
+    <style>
+        .navbar {
+            /* flex-direction: flexi; */
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+        }
 
-    <main>
+        .nav-scrollable {
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-scrollable nav {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* Style for the navigation links */
+        /* .nav-item {
+            margin-right: 20px;
+        } */
+
+        /* Style for the dropdown container */
+        .dropdown {
+            position: relative;
+            display: inline-block; 
+        }
+
+        /* Style for the dropdown content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            /* background-color: #f9f9f9; */
+            background-color: cadetblue;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            color: black;
+        }
+
+        /* Style for dropdown links */
+        .dropdown-content a {
+            color: lightcyan;
+            padding: 12px 0px;
+            text-decoration: none;
+            display: block;
+            width: 120px;
+        }
+
+        /* Change color on hover */
+        .dropdown-content a:hover {
+            background-color: grey;
+        }
+
+        /* Show the dropdown content when the mouse is over the dropdown container */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+        
+
+        <div style="right: 100px; position: absolute;">
+            <a href="" class="nav-link" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </a>
+        </div>
+    <div class="top-row px-4 auth">
+            <LoginDisplay/>
+
+            <div class="nav-link dropdown">
+                Member
+                <div NavLink class="dropdown-content">
+                    <a href="staffs">Staff</a>
+                    <a href="patients">Patient</a>
+                </div>
+            </div>
+
+            <a href="appointments" NavLink class="nav-link">Appointments</a>
+            <a href="consultations" NavLink class="nav-link">Consultations</a>
+            <a href="diagnosiss" NavLink class="nav-link">Diagnoses</a>
+            <a href="vitalsignsrecords" NavLink class="nav-link">Analysis</a>
+
+            <div class="nav-link dropdown">
+                Prescription
+                <div NavLink class="dropdown-content">
+                    <a href="prescriptions">Prescription</a>
+                    <a href="prescriptionItems">Prescription Item</a>
+                </div>
+            </div>
+
+            <a href="medicines" class="nav-link">Medicine</a>
+        <a href="resourceLibrary" class="nav-link">Resource Library</a>
+        </div>
+
+        </div>
         <article class="content px-4">
             @Body
         </article>
-    </main>
+<!-- Content above this section -->
+
+<div class="bottom-section">
+    <style>
+        .bottom-section {
+            margin-top: 30px;
+            border: 5px solid #013220;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bottom-section-column {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .bottom-section-column h3 {
+            text-align: center;
+        }
+
+        .bottom-section-column ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .bottom-section-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .bottom-section-column a {
+            text-decoration: none;
+            color: #013220;
+        }
+    </style>
+    <div class="bottom-section-column">
+        <h3>Our Us</h3>
+        <ul>
+            <li><a href="AboutCompany">About Company</a></li>
+            <li><a href="PrivacyPolicy">Privacy Policy</a></li>
+            <li><a href="TermsOfUse">Terms of Use</a></li>
+            <li><a href="ContactUs">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <div class="bottom-section-column">
+        <h3>Our Services</h3>
+        <ul>
+            <li><a href="medicines">Products</a></li>
+            <li><a href="MedicalCareFacilities">Medical and Care Facilities</a></li>
+            <li><a href="appointments">Book an Appointment</a></li>
+        </ul>
+    </div>
+
+    <div class="bottom-section-column">
+        <h3>Our Location</h3>
+        <ul>
+            <li>1. Tampines West, Singapore 199276</li>
+            <li>2. Jurong East Interchange, Singapore 888888</li>
+            <li>3. Raffles Hospital, 585 North Bridge Road, Singapore 188770</li>
+        </ul>
+    </div>
 </div>
+
+<!-- End of webpage -->
+@*     </main>
+</div> *@
