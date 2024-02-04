@@ -1,7 +1,118 @@
 ﻿@page "/resourceLibrary"
 
-<h3>ResourceLibrary</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-@code {
+        .header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: right;
+        }
 
-}
+        .background-image {
+            background-image: url('your-background-image.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 400px; /* Adjust the height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
+        .search-bar {
+            width: 70%;
+        }
+
+        .search-button {
+            width: 25%;
+        }
+
+        .underline {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .recent-searches {
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .footer a {
+                text-decoration: none;
+                color: #007BFF;
+                margin: 0 10px;
+            }
+
+                .footer a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+    <title>VitalMed Solutions</title>
+</head>
+<body>
+
+    <div class="header">
+        <button>Book Appointment</button>
+        <button>Log Out</button>
+    </div>
+
+    <div class="background-image">
+        <h1>VitalMed Solutions</h1>
+    </div>
+
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search...">
+        <button class="search-button">Search</button>
+    </div>
+
+    <div class="underline"></div>
+
+    <div class="recent-searches">
+        <h3>Latest Searches</h3>
+        <!-- Content of recent searches goes here -->
+    </div>
+
+    <div class="underline"></div>
+
+    <section class="container">
+        <form>
+            <i class="fas fa-search"></i>
+            <input type="text" name="" id="search-item" placeholder="search products">
+        </form>
+
+        <div class="product-list">
+            <div class="product">
+                <img src="img/"
+            </div>
+        </div>
+
+        <div>
+        </div>
+    </section>
+
+</body>
+</html>

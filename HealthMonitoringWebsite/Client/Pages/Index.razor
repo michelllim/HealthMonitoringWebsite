@@ -3,6 +3,15 @@
 
     <!-- Start Header -->
     <section id="slide" class="slide background-withcolor">
+        <style>
+            .content-bottom {
+                margin-top: 10px;
+                text-align: center;
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+
+        </style>
         <div class="content-bottom">
             <div class="container">
                 <div class="row align-items-center">
@@ -22,10 +31,26 @@
     <!-- End Header -->
     <!-- Start Boxes -->
     <section id="boxes" class="boxes padding-100">
+        <style>
+            .container {
+                text-align: center;
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+
+        </style>
         <div class="container">
             <div class="row">
+                <style>
+                    .boxes {
+                        border: 2px solid #026440;
+                    }
+                    .box{
+                        border: 1px solid #037d50
+                    }
+                </style>
                 <div class="col-md-4 col-12">
-                    <div class="box" data-aos="fade-up">
+                    <div class="box" data-aos="fade-up" border="px solid #026440;">
                         <div class="icon">
                             <span class="lnr lnr lnr-magic-wand"></span>
                         </div>
@@ -64,6 +89,14 @@
     <!-- Start Why Us -->
     <section id="about" class="why-us padding-100 background-fullwidth background-fixed "
              style="background-image: url(img/gray-bg.jpg);">
+        <style>
+            .container {
+                text-align: center;
+                padding-left:0px;
+                padding-right: 0px;
+            }
+
+        </style>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center" data-aos="fade-right">
@@ -120,5 +153,53 @@
             </div>
         </div>
     </section>
-</body>
+@* </body> *@
 <!-- End Why Us -->
+
+    <div class="imgNavigate px-4 auth">
+        <style>
+            .imgNavigate {
+                margin-top: 50px;
+                text-align: center;
+                border: 2px solid #04df8f;
+            }
+        </style>
+        <a href="patients" NavLink class="nav-link" style="position: relative; display: inline-block;">
+            <img style="width: 190px; height: 120px; left: 70px; top: 1000px;" src="img/AddUserPatient.png" />
+            <p style="position: absolute; top: -25px; width: 200px; left: 100px; transform: translateX(-50%); text-align: center; color: black; font-size: 18px; font-family: 'Palatino', 'URW Palladio L', serif;">
+                Create Patient Member
+            </p>
+        </a>
+
+        <a href="appointments" NavLink class="nav-link" style="position: relative; display: inline-block;">
+            <img style="width: 190px; height: 120px; left: 420px; top: 1000px;" src="img/Appointment.png" />
+            <p style="position: absolute; top: -25px; width: 230px; left: 110px; transform: translateX(-50%); text-align: center; color: black; font-size: 18px; font-family: 'Palatino', 'URW Palladio L', serif;">
+                Make Appointment with us!
+            </p>
+        </a>
+
+        <a href="consultations" NavLink class="nav-link" style="position: relative; display: inline-block;">
+            <img style="width: 190px; height: 120px; left: 770px; top: 1000px;" src="img/BookConsultation.png" />
+            <p style="position: absolute; top: -25px; width: 180px; left: 110px; transform: translateX(-50%); text-align: center; color: black; font-size: 18px; font-family: 'Palatino', 'URW Palladio L', serif;">
+                Request Consultation
+            </p>
+        </a>
+
+        <a href="medicines" NavLink class="nav-link" style="position: relative; display: inline-block;">
+            <img style="width: 190px; height: 120px; left: 1120px; top: 1000px" src="img/Medicine.jpg" />
+            <p style="position: absolute; top: -25px; left: 100px; transform: translateX(-50%); text-align: center; color: black; font-size: 18px; font-family: 'Palatino', 'URW Palladio L', serif;">
+                Medicine
+            </p>
+        </a>
+
+        <a href="vitalsignsrecords" NavLink class="nav-link" style="position: relative; display: inline-block;">
+            <img style="width: 190px; height: 120px; left: 1470px; top: 1000px;" src="img/Analysis.png"/>
+            <p style="position: absolute; width: 190px; top: -25px; left: 100px; transform: translateX(-50%); text-align: center; color: black; font-size: 18px; font-family: 'Palatino', 'URW Palladio L', serif;">
+                Analysis of Report
+            </p>
+        </a>
+    </div>
+
+</body>
+
+<bottom-section/>

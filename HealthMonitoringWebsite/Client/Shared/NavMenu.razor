@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager Navigation
 
+
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">HealthMonitoringWebsite</a>
@@ -11,126 +12,141 @@
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <AuthorizeView>
-            <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
-                        <span class="oi oi-person" aria-hidden="true"></span>  Hello, @context.User.Identity?.Name!
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="#" @onclick="BeginLogOut" Match="NavLinkMatch.All">
-                        <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
-                    </NavLink>
-                </div>
-            </Authorized>
-            <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
-                        <span class="oi oi-person" aria-hidden="true"></span>  Register
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
-                        <span class="oi oi-account-logout" aria-hidden="true"></span> Log in
-                    </NavLink>
-                </div>
-            </NotAuthorized>
-        </AuthorizeView>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
+        <div class="col-sm-12 col-md-3">
+            <AuthorizeView>
+                <Authorized>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
+                            <span class="oi oi-person" aria-hidden="true"></span>  Hello, @context.User.Identity?.Name!
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="#" @onclick="BeginLogOut" Match="NavLinkMatch.All">
+                            <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
+                        </NavLink>
+                    </div>
+                </Authorized>
+        
+                <NotAuthorized>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
+                            <span class="oi oi-person" aria-hidden="true"></span>  Register
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
+                            <span class="oi oi-account-logout" aria-hidden="true"></span> Log in
+                        </NavLink>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
+        <div class="nav-item px-3>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
 @*         <div class="nav-item px-3">
             <NavLink class="nav-link" href="services">
                 <span class="oi oi-plus" aria-hidden="true"></span> Services
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="support">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Support
-            </NavLink>
-        </div>
-         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="account">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Account
-            </NavLink>
-        </div> 
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="support">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Support
+                </NavLink>
+            </div>
+             <div class="nav-item px-3">
+                <NavLink class="nav-link" href="account">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Account
+                </NavLink>
+            </div> 
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="schedule">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Schedule
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="chat">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Chat
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="analysis">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Analysis
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="healthStore">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Health Store
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="resourceLibrary">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Resource Library
-            </NavLink>
-        </div> *@
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="schedule">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Schedule
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="chat">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Chat
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="analysis">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Analysis
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="healthStore">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Health Store
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="resourceLibrary">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Resource Library
+                </NavLink>
+            </div> *@
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="patients">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Patients
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="vitalsignsrecords">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> VitalSignsRecords
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="consultations">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Consultations
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="diagnosiss">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Diagnoses
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="prescriptions">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Prescriptions
-            </NavLink>
-        </div>
+            @* <div class="nav-item px-3">
+                <div class="nav-link dropdown">
+                    <span class="oi oi-person" aria-hidden="true"></span> Member
+                    <div class="dropdown-content">
+                        <NavLink href="staffs">Staff</NavLink>
+                        <NavLink href="patients">Patient</NavLink>
+                    </div>
+                </div>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="staffs">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Staffs
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="appointments">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Appointments
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="medicines">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Medicine
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="prescriptionItems">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Prescription Items
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="appointments">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Appointments
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="consultations">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Consultations
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="diagnosiss">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Diagnoses
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="vitalsignsrecords">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Analysis
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <div class="nav-link dropdown">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Prescription
+                    <div class="dropdown-content">
+                        <NavLink href="prescriptions">Prescription</NavLink>
+                        <NavLink href="prescriptionItems">Prescription Item</NavLink>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="medicines">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Medicine
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="researchLibrary">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Research Library
+                </NavLink>
+            </div>
+            
+            </div>
+        *@
 
     </nav>
 </div>
