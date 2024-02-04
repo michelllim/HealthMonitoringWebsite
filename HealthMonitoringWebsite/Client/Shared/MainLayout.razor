@@ -1,17 +1,33 @@
 ﻿@inherits LayoutComponentBase
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject IAuthorizationService AuthorizationService
 
 @code {
-    private bool isAdmin = false;
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+    private bool userIsAdmin = false;
+    private bool userIsStaff = false;
+    private bool userIsUser = false;
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        isAdmin = user.IsInRole("Admin");
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = state.User?.Identity?.Name;
+        if (state.User?.Identity?.IsAuthenticated ?? false)
+        {
+            if (userName.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+            {
+                userIsAdmin = true;
+            }
+            else if (userName.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+            {
+                userIsStaff = true;
+            }
+            else
+            {
+                userIsUser = true;
+            }
+        }
     }
 }
 
@@ -89,14 +105,17 @@
 
     <div class="top-row px-4 auth">
         <LoginDisplay />
-
-        <div class="nav-link dropdown">
-            Member
-            <div class="dropdown-content">
-                <a href="staffs">Staff</a>
-                <a href="patients">Patient</a>
+        @if (userIsAdmin)
+        {
+            <div class="nav-link dropdown">
+                Member
+                <div class="dropdown-content">
+                    <a href="staffs">Staff</a>
+                    <a href="patients">Patient</a>
+                </div>
             </div>
-        </div>
+        }
+
 
 
         <a href="appointments" NavLink class="nav-link">Appointments</a>

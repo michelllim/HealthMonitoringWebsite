@@ -14,7 +14,6 @@ namespace HealthMonitoringWebsite.Client.Static
         public static readonly string DiagnosissEndpoint = $"{Prefix}/diagnosiss";
         public static readonly string PrescriptionsEndpoint = $"{Prefix}/prescriptions";
         public static readonly string VitalSignsRecordsEndpoint = $"{Prefix}/vitalsignsrecords";
-
 		public static readonly string StaffsEndpoint = $"{Prefix}/staffs";
 		public static readonly string AppointmentsEndpoint = $"{Prefix}/appointments";
 		public static readonly string MedicinesEndpoint = $"{Prefix}/medicines";

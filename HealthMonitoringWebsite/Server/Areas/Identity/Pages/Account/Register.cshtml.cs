@@ -181,7 +181,7 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
                         //                  //sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
                         //                  sta.Password = Input.Password;
                         //                  _context.Staffs.Add(sta);
-                        await _context.SaveChangesAsync();
+                        //await _context.SaveChangesAsync();
                         //staffId = sta.StaffID;
 
                     }
@@ -197,7 +197,7 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
                         ////sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
                         //sta.Password = Input.Password;
                         //_context.Staffs.Add(sta);
-                        await _context.SaveChangesAsync();
+                        //await _context.SaveChangesAsync();
                         ////staffId = sta.StaffID;
                     }
                     else
@@ -214,7 +214,7 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
                         ////pat.Password = _passwordHasher.HashPassword(pat, Input.Password);
                         //                  pat.Password = Input.Password;
                         //_context.Patients.Add(pat);
-                        await _context.SaveChangesAsync();
+                        //await _context.SaveChangesAsync();
                         ////patId = pat.PatientID;
                     }
 

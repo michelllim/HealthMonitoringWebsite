@@ -1,0 +1,61 @@
+﻿@page "/patient/schedule"
+@using HealthMonitoringWebsite.Client.Static;
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Components.Authorization
+<h3>ViewAppointment</h3>
+<RadzenScheduler Data="@tempApp" TItem="Appointment" StartProperty="Start" EndProperty="End" TextProperty="Reason">
+    <RadzenDayView />
+    <RadzenWeekView />
+	<RadzenMonthView />
+</RadzenScheduler>
+@code {
+    private IList<Patient>? patients;
+    private IList<Appointment>? appointments;
+    private int patid;
+    private List<Appointment> tempApp = new List<Appointment>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        appointments = await _client.GetFromJsonAsync<IList<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+        patients = await _client.GetFromJsonAsync<IList<Patient>>($"{Endpoints.PatientsEndpoint}");
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = state.User?.Identity?.Name;
+
+
+        if (patients != null)
+        {
+            foreach (var pat in patients)
+            {
+                System.Console.WriteLine($"Pat id: {pat.Id}");
+                System.Console.WriteLine($"Pat Userid: {pat.PatientID}");
+                if (pat.Email == userName)
+                {
+                    patid = pat.Id;
+                    System.Console.WriteLine($"Pat id: {pat.Id}");
+                }
+            }
+        }
+        if(appointments != null)
+        {
+            foreach( var app in appointments)
+            {
+                if (app.PatientID == patid)
+                {
+                    tempApp.Add(app);
+                    System.Console.WriteLine($"app end: {app.AppointmentEndTime}");
+                }
+            }
+        }
+        if (tempApp.Any())
+        {
+            System.Console.WriteLine("have thing");
+        }
+        else
+        {
+            System.Console.WriteLine("no thing");
+        }
+
+	}
+	}
