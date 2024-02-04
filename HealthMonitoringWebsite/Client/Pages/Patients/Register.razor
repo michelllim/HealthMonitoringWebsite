@@ -1,12 +1,12 @@
-﻿@page "/patients/create/"
+﻿@page "/patients/register/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New Patient</h3>
+<h3 class="card-title">Register Details</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create Patient" patient="patient" OnValidSubmit="@CreatePatient" />
+<FormComponent ButtonText="Save" patient="patient" OnValidSubmit="@CreatePatient" />
 
 @code {
 	private Patient patient = new Patient();
@@ -15,7 +15,7 @@
 	{
 		patient.PatientID = patient.Id;
 		await _client.PostAsJsonAsync(Endpoints.PatientsEndpoint, patient);
-		_navManager.NavigateTo("/patients/");
+		_navManager.NavigateTo("/");
 	}
 
 }

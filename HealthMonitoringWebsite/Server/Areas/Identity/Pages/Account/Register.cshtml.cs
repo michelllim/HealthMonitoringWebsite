@@ -19,6 +19,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using HealthMonitoringWebsite.Server.Data;
+using HealthMonitoringWebsite.Shared.Domain;
+using HealthMonitoringWebsite.Client.Static;
+using HealthMonitoringWebsite.Client.Pages;
+using System.Drawing.Text;
 
 namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
 {
@@ -31,14 +36,20 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+		private readonly ApplicationDbContext _context;
+		//private readonly PasswordHasher<Patient> _passwordHasher = new PasswordHasher<Patient>();
+		//private readonly PasswordHasher<Staff> _passwordHasher1 = new PasswordHasher<Staff>();
 
-        public RegisterModel(
+		public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext context)
+			//PasswordHasher<Patient> passwordHasher,
+		   //PasswordHasher<Staff> passwordHasher1
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -47,13 +58,18 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
-        }
+            _context = context;
+   //         _passwordHasher = passwordHasher;
+			//_passwordHasher1 = passwordHasher1;
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [BindProperty]
+
+		}
+
+		/// <summary>
+		///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+		///     directly from your code. This API may change or be removed in future releases.
+		/// </summary>
+		[BindProperty]
         public InputModel Input { get; set; }
 
         /// <summary>
@@ -135,16 +151,65 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                //int staffId = 0;
+                //int patId = 0;
+
                 if (result.Succeeded)
                 {
-                    //Set user role to user
-                    if (!await _roleManager.RoleExistsAsync("User"))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole("User"));
-                    }
-                    await _userManager.AddToRoleAsync(user, "User");
+					//Set user role to user
+					_logger.LogInformation("User created a new account with password.");
 
-                    _logger.LogInformation("User created a new account with password.");
+					if (Input.Email.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+					{
+						if (!await _roleManager.RoleExistsAsync("Staff"))
+						{
+							await _roleManager.CreateAsync(new IdentityRole("Staff"));
+
+						}
+
+						await _userManager.AddToRoleAsync(user, "Staff");
+						//var sta = CreateStaff();
+						//sta.Email = Input.Email;
+      //                  //sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
+      //                  sta.Password = Input.Password;
+      //                  _context.Staffs.Add(sta);
+						//await _context.SaveChangesAsync();
+						//staffId = sta.StaffID;
+
+					}
+					else if (Input.Email.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+					{
+						if (!await _roleManager.RoleExistsAsync("Admin"))
+						{
+							await _roleManager.CreateAsync(new IdentityRole("Admin"));
+						}
+						await _userManager.AddToRoleAsync(user, "Admin");
+						//var sta = CreateStaff();
+						//sta.Email = Input.Email;
+						////sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
+						//sta.Password = Input.Password;
+						//_context.Staffs.Add(sta);
+						//await _context.SaveChangesAsync();
+						////staffId = sta.StaffID;
+					}
+					else
+					{
+						// Default role logic here, if necessary
+						if (!await _roleManager.RoleExistsAsync("User"))
+						{
+							await _roleManager.CreateAsync(new IdentityRole("User"));
+						}
+						//await _userManager.AddToRoleAsync(user, "User");
+
+						//var pat = CreatePatient();
+						//pat.Email = Input.Email;
+						////pat.Password = _passwordHasher.HashPassword(pat, Input.Password);
+      //                  pat.Password = Input.Password;
+						//_context.Patients.Add(pat);
+						//await _context.SaveChangesAsync();
+						////patId = pat.PatientID;
+					}
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -164,8 +229,30 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
                     }
                     else
                     {
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        // Redirect user based on role
+
+                        //string redirectUrl = Input.Email.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase)
+                        //	 ? $"~/staffs/edit/{staffId}"
+                        //	 : Input.Email.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase)
+                        //	   ? returnUrl // Use a specific URL for admin if needed
+                        //	   : $"~/patients/edit/{patId}";
+                        //return LocalRedirect(redirectUrl);
+
+                        if (Input.Email.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+                        {
+
+                            return LocalRedirect($"~/staffs/register"); // Adjust to the actual staff dashboard link
+                        }
+                        else if (Input.Email.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return LocalRedirect("~/staffs/register"); // Adjust to the actual admin dashboard link
+                        }
+                        else
+                        {
+                            return LocalRedirect($"~/patients/register");
+                        }
                     }
                 }
                 foreach (var error in result.Errors)
@@ -192,7 +279,35 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<ApplicationUser> GetEmailStore()
+   //     private Patient CreatePatient()
+   //     {
+   //         Patient patient = new Patient();
+			//patient.PatientID = patient.Id;
+			//patient.PatientName = "";
+			//patient.PatientDateOfBirth = DateTime.Now;
+   //         patient.PatientGender = "";
+   //         patient.PatientNRIC = "";
+   //         patient.PatientFamilyHistory = "";
+   //         patient.PatientAllergies = "";
+   //         patient.PatientBloodType = "";
+   //         patient.PatientAddress = "";
+   //         patient.PatientContactNumber = "";
+   //         patient.PatientEmergencyContact = "";
+			//return patient;
+   //     }
+
+   //     private Staff CreateStaff()
+   //     {
+   //         Staff staff = new Staff();
+   //         staff.StaffID = staff.Id;
+   //         staff.StaffName = "";
+   //         staff.StaffContactNumber = "";
+   //         staff.StaffRole = "";
+   //         staff.StaffSpecialization = "";
+   //         return staff;
+
+   //     }
+		private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {

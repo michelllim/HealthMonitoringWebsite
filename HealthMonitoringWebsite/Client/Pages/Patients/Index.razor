@@ -4,6 +4,7 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 @inject HttpInterceptorService _interceptor
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h3 class="card-title">Patients</h3>
 <br />
@@ -24,6 +25,7 @@ else
 	<table class="table table-responsive" id="patientsTable">
 		<thead>
 			<tr>
+				<th>PatientID</th>
 				<th>Full Name</th>
 				<th>Date of Birth</th>
 				<th>Gender</th>
@@ -42,6 +44,7 @@ else
 			@foreach (var patient in Patients)
 			{
 				<tr>
+					<td>@patient.PatientID</td>
 					<td>@patient.PatientName</td>
 					<td>@patient.PatientDateOfBirth</td>
 					<td>@patient.PatientGender</td>
@@ -77,6 +80,25 @@ else
 	{
 		_interceptor.MonitorEvent();
 		Patients = await _client.GetFromJsonAsync<List<Patient>>($"{Endpoints.PatientsEndpoint}");
+		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var userName = state.User?.Identity?.Name;
+		System.Console.WriteLine($"User Name: {userName}");
+
+		if (Patients !=null)
+		{
+			foreach (var pat in Patients)
+			{
+				System.Console.WriteLine($"Pat id: {pat.Id}");
+				System.Console.WriteLine($"Pat id: {pat.PatientID}");
+				if (pat.Email == userName)
+				{
+					pat.PatientID = pat.Id;
+					System.Console.WriteLine($"Pat id: {pat.Id}");
+				}
+			}
+		}
+
+	
 	}
 
 	async Task Delete(int patientId)

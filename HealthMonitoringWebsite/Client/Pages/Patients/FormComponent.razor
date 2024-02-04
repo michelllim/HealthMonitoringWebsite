@@ -57,7 +57,15 @@
 		<div class="form-group">
 			<label>Blood Type: </label>
 			<div>
-				<InputText @bind-Value="@patient.PatientBloodType" class="form-control" />
+				<InputSelect @bind-Value="patient.PatientBloodType" class="form-control">
+					<option value="">-- Select Role --</option>
+					<option value="@patient.PatientBloodType">A+</option>
+					<option value="@patient.PatientBloodType">A-</option>
+					<option value="@patient.PatientBloodType">B+</option>
+					<option value="@patient.PatientBloodType">B-</option>
+					<option value="@patient.PatientBloodType">O+</option>
+					<option value="@patient.PatientBloodType">O-</option>
+				</InputSelect>
 				<ValidationMessage For="@(() => patient.PatientBloodType)" />
 			</div>
 		</div>
@@ -112,6 +120,7 @@
 	}
 
 	<BackToList Target="patients" />
+
 </EditForm>
 
 @code {
@@ -119,4 +128,25 @@
 	[Parameter] public string ButtonText { get; set; } = "Save";
 	[Parameter] public EventCallback OnValidSubmit { get; set; }
 	[Parameter] public bool Disabled { get; set; } = false;
+
+	[Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var userName = state.User?.Identity?.Name;
+
+		if (state.User?.Identity?.IsAuthenticated ?? false)
+		{
+			patient.Email = userName;
+			patient.PatientDateOfBirth = DateTime.Now;
+
+			if (!string.IsNullOrEmpty(userName) && patient != null)
+			{
+				// Set the patient's email here
+				patient.Email = patient.Email;
+			}
+		}
+	}
+
 }

@@ -12,7 +12,7 @@ namespace HealthMonitoringWebsite.Shared.Domain
 		public int StaffID { get; set; }
 
 		[Required]
-		[StringLength(100, MinimumLength = 2, ErrorMessage = "First Name does not meet length requirements")]  //error handling
+		[StringLength(100, MinimumLength = 2, ErrorMessage = "Name does not meet length requirements")]  //error handling
 		public string? StaffName { get; set; }
 
 		[Required]
@@ -25,9 +25,9 @@ namespace HealthMonitoringWebsite.Shared.Domain
 		public string? StaffRole { get; set; }
 		public string? StaffSpecialization { get; set; }
 
-		[Required]
-		[DataType(DataType.EmailAddress, ErrorMessage = "Email Address is not a valid email")]
-		[EmailAddress]
+		//[Required]
+		//[DataType(DataType.EmailAddress, ErrorMessage = "Email Address is not a valid email")]
+		//[EmailAddress]
 		public string? Email { get; set; }
 		public string? Password { get; set; }
 		public virtual List<Appointment>? Appointments { get; set; }

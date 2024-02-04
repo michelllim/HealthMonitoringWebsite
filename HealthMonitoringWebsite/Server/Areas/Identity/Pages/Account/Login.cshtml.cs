@@ -115,7 +115,24 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    if (user != null)
+                    {
+						return LocalRedirect(returnUrl);
+						//if (Input.Email.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+						//{
+						//    return LocalRedirect("~/"); // Adjust to the actual staff dashboard link
+						//}
+						//else if (Input.Email.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+						//{
+						//    return LocalRedirect(returnUrl); // Adjust to the actual admin dashboard link
+						//}
+						//else
+						//{
+						//    return LocalRedirect("~/");
+						//}
+					}
+					_logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HealthMonitoringWebsite.Server.Data;
 using HealthMonitoringWebsite.Shared.Domain;
 using HealthMonitoringWebsite.Server.IRepository;
+using HealthMonitoringWebsite.Server.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace HealthMonitoringWebsite.Server.Controllers
 {
@@ -18,15 +20,18 @@ namespace HealthMonitoringWebsite.Server.Controllers
         //Refactored
         //private readonly ApplicationDbContext_context;
         private readonly IUnitOfWork _unitOfWork;
+		private readonly UserManager<ApplicationUser> _userManager;
 
-        //Refactored
-        //public PatientsController(ApplicationDbContextcontext)
-        public PatientsController(IUnitOfWork unitOfWork)
+		//Refactored
+		//public PatientsController(ApplicationDbContextcontext)
+		public PatientsController(IUnitOfWork unitOfWork)
+            //, UserManager<ApplicationUser> userManager)
         {
             //Refactored
             //_context = context
             _unitOfWork = unitOfWork;
-        }
+			//_userManager = userManager;
+		}
 
 
         // GET: api/Patients
@@ -153,5 +158,27 @@ namespace HealthMonitoringWebsite.Server.Controllers
             var patient = await _unitOfWork.Patients.Get(q => q.Id == id);
             return patient != null;
         }
-    }
+
+		//[HttpGet("get-user-email")]
+		//public async Task<ActionResult<string>> GetUserEmail()
+		//{
+		//	var userName = User.Identity.Name;
+		//	var user = await _userManager.FindByNameAsync(userName);
+		//	return user?.Email;
+		//}
+
+		[HttpGet("email")]
+		public ActionResult<string> GetCurrentUserEmail()
+		{
+			// Assuming the email claim type is "email" or use ClaimTypes.Email
+			var email = User?.Claims?.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
+
+			if (string.IsNullOrEmpty(email))
+			{
+				return NotFound("Email not found.");
+			}
+
+			return Ok(email);
+		}
+	}
 }

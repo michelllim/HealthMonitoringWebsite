@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using HealthMonitoringWebsite.Server.IRepository;
 using HealthMonitoringWebsite.Server.Repository;
+using HealthMonitoringWebsite.Client.Pages;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,18 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
 	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("AdminPolicy", policy =>
+		policy.RequireRole("Admin"));
+
+	options.AddPolicy("StaffPolicy", policy =>
+		policy.RequireRole("Staff"));
+
+	options.AddPolicy("UserPolicy", policy =>
+		policy.RequireRole("User"));
+});
 
 builder.Services.AddIdentityServer()
 	.AddApiAuthorization<ApplicationUser, ApplicationDbContext>();

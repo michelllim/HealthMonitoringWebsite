@@ -12,13 +12,13 @@ namespace HealthMonitoringWebsite.Shared.Domain
         public int PatientID { get; set; }
 		
 		[Required]
-		[StringLength(100, MinimumLength = 2, ErrorMessage = "First Name does not meet length requirements")]
+		[StringLength(100, MinimumLength = 2, ErrorMessage = "Full Name does not meet length requirements")]
 		public string? PatientName { get; set; }
         public DateTime PatientDateOfBirth { get; set; }
         public string? PatientGender { get; set; }
 		
         [Required]
-		[RegularExpression(@"^[STFGstfg]\d{7}[A-Za-z]", ErrorMessage = "Driving License does not meet NRIC requirements")]
+		[RegularExpression(@"^[STFGstfg]\d{7}[A-Za-z]", ErrorMessage = "NRIC does not meet the requirements")]
 		public string? PatientNRIC {  get; set; }
         
         public string? PatientFamilyHistory { get; set; }
@@ -40,9 +40,9 @@ namespace HealthMonitoringWebsite.Shared.Domain
 		[RegularExpression(@"(6|8|9)\d{7}", ErrorMessage = "Emergency Contact Number is not a valid phone number")]
 		public string? PatientEmergencyContact {  get; set; }
 
-		[Required]
-		[DataType(DataType.EmailAddress, ErrorMessage = "Email Address is not a valid email")]
-		[EmailAddress]
+		//[Required]
+		//[DataType(DataType.EmailAddress, ErrorMessage = "Email Address is not a valid email")]
+		//[EmailAddress]
 		public string? Email {  get; set; }
         public string? Password { get; set; }
     }

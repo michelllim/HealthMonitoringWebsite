@@ -21,7 +21,14 @@
 		<div class="form-group">
 			<label>Role: </label>
 			<div>
-				<InputText @bind-Value="@staff.StaffRole" class="form-control" />
+				<InputSelect @bind-Value="staff.StaffRole" class="form-control">
+					<option value="">-- Select Role --</option>
+					<option value="@staff.StaffRole">Administrator</option>
+					<option value="@staff.StaffRole">Admin Staff</option>
+					<option value="@staff.StaffRole">Temporary Staff</option>
+					<option value="@staff.StaffRole">Doctor</option>
+					<option value="@staff.StaffRole">Nurse</option>
+				</InputSelect>
 				<ValidationMessage For="@(() => staff.StaffRole)" />
 			</div>
 		</div>
@@ -29,7 +36,20 @@
 		<div class="form-group">
 			<label>Specialization: </label>
 			<div>
-				<InputText @bind-Value="@staff.StaffSpecialization" class="form-control" />
+				<InputSelect @bind-Value="staff.StaffSpecialization" class="form-control">
+					<option value="">-- Select Specialization --</option>
+					<option value="@staff.StaffSpecialization">Administration</option>
+					<option value="@staff.StaffSpecialization">Cardiology</option>
+					<option value="@staff.StaffSpecialization">Diagnostic Radiology</option>
+					<option value="@staff.StaffSpecialization">Gastroenterology</option>
+					<option value="@staff.StaffSpecialization">Haematology</option>
+					<option value="@staff.StaffSpecialization">Infectious Diseases</option>
+					<option value="@staff.StaffSpecialization">Psychiatry</option>
+					<option value="@staff.StaffSpecialization">Public Health</option>
+					<option value="@staff.StaffSpecialization">Rehabilitation Medicine</option>
+					<option value="@staff.StaffSpecialization">Respiratory Medicine</option>
+					<option value="@staff.StaffSpecialization">Urology</option>
+				</InputSelect>
 				<ValidationMessage For="@(() => staff.StaffSpecialization)" />
 			</div>
 		</div>
@@ -60,6 +80,7 @@
 	}
 
 	<BackToList Target="staffs" />
+
 </EditForm>
 
 @code {
@@ -67,4 +88,23 @@
 	[Parameter] public string ButtonText { get; set; } = "Save";
 	[Parameter] public EventCallback OnValidSubmit { get; set; }
 	[Parameter] public bool Disabled { get; set; } = false;
+
+	[Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var userName = state.User?.Identity?.Name;
+
+		if (state.User?.Identity?.IsAuthenticated ?? false)
+		{
+			staff.Email = userName;
+
+			if (!string.IsNullOrEmpty(userName) && staff != null)
+			{
+				// Set the patient's email here
+				staff.Email = staff.Email;
+			}
+		}
+	}
 }

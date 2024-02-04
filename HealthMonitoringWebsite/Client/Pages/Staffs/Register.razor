@@ -1,12 +1,12 @@
-﻿@page "/staffs/create/"
+﻿@page "/staffs/register/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New Staff</h3>
+<h3 class="card-title">Register Details</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Save Details" staff="staff" OnValidSubmit="@CreateStaff" />
+<FormComponent ButtonText="Save" staff="staff" OnValidSubmit="@CreateStaff" />
 
 @code {
 	private Staff staff = new Staff();
@@ -15,6 +15,7 @@
 	{
 		staff.StaffID = staff.Id;
 		await _client.PostAsJsonAsync(Endpoints.StaffsEndpoint, staff);
-		_navManager.NavigateTo("/staffs/");
+		_navManager.NavigateTo("/");
 	}
+
 }

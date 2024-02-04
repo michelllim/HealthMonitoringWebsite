@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HealthMonitoringWebsite.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class newdb : Migration
+    public partial class newDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -131,7 +131,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     PatientAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PatientContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PatientEmergencyContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -174,7 +174,7 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     StaffContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffSpecialization = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),

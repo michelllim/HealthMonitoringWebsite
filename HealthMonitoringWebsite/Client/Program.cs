@@ -24,4 +24,16 @@ builder.Services.AddScoped<HttpInterceptorService>();
 
 builder.Services.AddApiAuthorization();
 
+builder.Services.AddAuthorizationCore(options =>
+{
+	options.AddPolicy("AdminPolicy", policy =>
+		policy.RequireRole("Admin"));
+
+	options.AddPolicy("StaffPolicy", policy =>
+		policy.RequireRole("Staff"));
+
+	options.AddPolicy("UserPolicy", policy =>
+		policy.RequireRole("User"));
+});
+
 await builder.Build().RunAsync();
