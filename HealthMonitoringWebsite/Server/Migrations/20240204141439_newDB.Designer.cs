@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthMonitoringWebsite.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240204065556_newDB")]
+    [Migration("20240204141439_newDB")]
     partial class newDB
     {
         /// <inheritdoc />

@@ -159,58 +159,6 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
 					//Set user role to user
 					_logger.LogInformation("User created a new account with password.");
 
-					if (Input.Email.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
-					{
-						if (!await _roleManager.RoleExistsAsync("Staff"))
-						{
-							await _roleManager.CreateAsync(new IdentityRole("Staff"));
-
-						}
-
-						await _userManager.AddToRoleAsync(user, "Staff");
-						//var sta = CreateStaff();
-						//sta.Email = Input.Email;
-      //                  //sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
-      //                  sta.Password = Input.Password;
-      //                  _context.Staffs.Add(sta);
-						//await _context.SaveChangesAsync();
-						//staffId = sta.StaffID;
-
-					}
-					else if (Input.Email.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
-					{
-						if (!await _roleManager.RoleExistsAsync("Admin"))
-						{
-							await _roleManager.CreateAsync(new IdentityRole("Admin"));
-						}
-						await _userManager.AddToRoleAsync(user, "Admin");
-						//var sta = CreateStaff();
-						//sta.Email = Input.Email;
-						////sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
-						//sta.Password = Input.Password;
-						//_context.Staffs.Add(sta);
-						//await _context.SaveChangesAsync();
-						////staffId = sta.StaffID;
-					}
-					else
-					{
-						// Default role logic here, if necessary
-						if (!await _roleManager.RoleExistsAsync("User"))
-						{
-							await _roleManager.CreateAsync(new IdentityRole("User"));
-						}
-						//await _userManager.AddToRoleAsync(user, "User");
-
-						//var pat = CreatePatient();
-						//pat.Email = Input.Email;
-						////pat.Password = _passwordHasher.HashPassword(pat, Input.Password);
-      //                  pat.Password = Input.Password;
-						//_context.Patients.Add(pat);
-						//await _context.SaveChangesAsync();
-						////patId = pat.PatientID;
-					}
-
-
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -219,6 +167,56 @@ namespace HealthMonitoringWebsite.Server.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
+
+                    if (Input.Email.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+                    {
+                        //if (!await _roleManager.RoleExistsAsync("Staff"))
+                        //{
+                        //	await _roleManager.CreateAsync(new IdentityRole("Staff"));
+
+                        //}
+                        await _userManager.AddToRoleAsync(user, "Staff");
+                        //var sta = CreateStaff();
+                        //sta.Email = Input.Email;
+                        //                  //sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
+                        //                  sta.Password = Input.Password;
+                        //                  _context.Staffs.Add(sta);
+                        await _context.SaveChangesAsync();
+                        //staffId = sta.StaffID;
+
+                    }
+                    else if (Input.Email.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+                    {
+                        //if (!await _roleManager.RoleExistsAsync("Admin"))
+                        //{
+                        //	await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                        //}
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                        //var sta = CreateStaff();
+                        //sta.Email = Input.Email;
+                        ////sta.Password = _passwordHasher1.HashPassword(sta, Input.Password);
+                        //sta.Password = Input.Password;
+                        //_context.Staffs.Add(sta);
+                        await _context.SaveChangesAsync();
+                        ////staffId = sta.StaffID;
+                    }
+                    else
+                    {
+                        // Default role logic here, if necessary
+                        //if (!await _roleManager.RoleExistsAsync("User"))
+                        //{
+                        //	await _roleManager.CreateAsync(new IdentityRole("User"));
+                        //}
+                        await _userManager.AddToRoleAsync(user, "User");
+
+                        //var pat = CreatePatient();
+                        //pat.Email = Input.Email;
+                        ////pat.Password = _passwordHasher.HashPassword(pat, Input.Password);
+                        //                  pat.Password = Input.Password;
+                        //_context.Patients.Add(pat);
+                        await _context.SaveChangesAsync();
+                        ////patId = pat.PatientID;
+                    }
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

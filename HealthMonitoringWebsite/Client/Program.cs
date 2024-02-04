@@ -3,7 +3,10 @@ using HealthMonitoringWebsite.Client.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
+
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -24,16 +27,16 @@ builder.Services.AddScoped<HttpInterceptorService>();
 
 builder.Services.AddApiAuthorization();
 
-builder.Services.AddAuthorizationCore(options =>
-{
-	options.AddPolicy("AdminPolicy", policy =>
-		policy.RequireRole("Admin"));
+//builder.Services.AddAuthorizationCore(options =>
+//{
+//	options.AddPolicy("AdminPolicy", policy =>
+//		policy.RequireRole("Admin"));
 
-	options.AddPolicy("StaffPolicy", policy =>
-		policy.RequireRole("Staff"));
+//	options.AddPolicy("StaffPolicy", policy =>
+//		policy.RequireRole("Staff"));
 
-	options.AddPolicy("UserPolicy", policy =>
-		policy.RequireRole("User"));
-});
+//	options.AddPolicy("UserPolicy", policy =>
+//		policy.RequireRole("User"));
+//});
 
 await builder.Build().RunAsync();

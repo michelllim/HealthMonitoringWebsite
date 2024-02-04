@@ -1,4 +1,19 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAuthorizationService AuthorizationService
+
+@code {
+    private bool isAdmin = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        isAdmin = user.IsInRole("Admin");
+    }
+}
 
 <div class="page">
     @* <div class="sidebar">
@@ -71,16 +86,19 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </a>
         </div>
-    <div class="top-row px-4 auth">
-            <LoginDisplay/>
 
-            <div class="nav-link dropdown">
-                Member
-                <div NavLink class="dropdown-content">
-                    <a href="staffs">Staff</a>
-                    <a href="patients">Patient</a>
+    <div class="top-row px-4 auth">
+        <LoginDisplay/>
+@*             @if (isAdmin)
+            { *@
+                <div class="nav-link dropdown">
+                    Member
+                    <div class="dropdown-content">
+                        <a href="staffs">Staff</a>
+                        <a href="patients">Patient</a>
+                    </div>
                 </div>
-            </div>
+@*             } *@
 
             <a href="appointments" NavLink class="nav-link">Appointments</a>
             <a href="consultations" NavLink class="nav-link">Consultations</a>
