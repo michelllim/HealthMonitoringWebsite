@@ -23,11 +23,11 @@
 			<div>
 				<InputSelect @bind-Value="staff.StaffRole" class="form-control">
 					<option value="">-- Select Role --</option>
-					<option value="@staff.StaffRole">Administrator</option>
-					<option value="@staff.StaffRole">Admin Staff</option>
-					<option value="@staff.StaffRole">Temporary Staff</option>
-					<option value="@staff.StaffRole">Doctor</option>
-					<option value="@staff.StaffRole">Nurse</option>
+					<option value="Administrator">Administrator</option>
+					<option value="Admin Staff">Admin Staff</option>
+					<option value="Temporary Staff">Temporary Staff</option>
+					<option value="Doctor">Doctor</option>
+					<option value="Nurse">Nurse</option>
 				</InputSelect>
 				<ValidationMessage For="@(() => staff.StaffRole)" />
 			</div>
@@ -38,17 +38,18 @@
 			<div>
 				<InputSelect @bind-Value="staff.StaffSpecialization" class="form-control">
 					<option value="">-- Select Specialization --</option>
-					<option value="@staff.StaffSpecialization">Administration</option>
-					<option value="@staff.StaffSpecialization">Cardiology</option>
-					<option value="@staff.StaffSpecialization">Diagnostic Radiology</option>
-					<option value="@staff.StaffSpecialization">Gastroenterology</option>
-					<option value="@staff.StaffSpecialization">Haematology</option>
-					<option value="@staff.StaffSpecialization">Infectious Diseases</option>
-					<option value="@staff.StaffSpecialization">Psychiatry</option>
-					<option value="@staff.StaffSpecialization">Public Health</option>
-					<option value="@staff.StaffSpecialization">Rehabilitation Medicine</option>
-					<option value="@staff.StaffSpecialization">Respiratory Medicine</option>
-					<option value="@staff.StaffSpecialization">Urology</option>
+					<option value="Administration">Administration</option>
+					<option value="Cardiology">Cardiology</option>
+					<option value="Diagnostic Radiology">Diagnostic Radiology</option>
+					<option value="Gastroenterology">Gastroenterology</option>
+					<option value="Haematology">Haematology</option>
+					<option value="Infectious Diseases">Infectious Diseases</option>
+					<option value="Psychiatry">Psychiatry</option>
+					<option value="Public Health">Public Health</option>
+					<option value="Rehabilitation Medicine">Rehabilitation Medicine</option>
+					<option value="Respiratory Medicine">Respiratory Medicine</option>
+					<option value="Urology">Urology</option>
+					<!-- Add more specialization options here -->
 				</InputSelect>
 				<ValidationMessage For="@(() => staff.StaffSpecialization)" />
 			</div>

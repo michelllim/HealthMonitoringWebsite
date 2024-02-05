@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Price: </label>
+			<label>Price ($): </label>
 			<div>
 				<InputNumber @bind-Value="@consultation.ConsultationPrice" class="form-control" />
 				<ValidationMessage For="@(() => consultation.ConsultationPrice)" />
@@ -111,5 +111,9 @@
 	{
 		VitalSignsRecords = await _client.GetFromJsonAsync<List<VitalSignsRecord>>($"{Endpoints.VitalSignsRecordsEndpoint}");
 		Appointments = await _client.GetFromJsonAsync<List<Appointment>>($"{Endpoints.AppointmentsEndpoint}");
+
+		consultation.ConsultationDate = DateTime.Today;
+		consultation.ConsultationStartTime = DateTime.Now;
+		consultation.ConsultationEndTime = DateTime.Now;
 	}
 }

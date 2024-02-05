@@ -21,7 +21,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Height: </label>
+			<label>Height (cm): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.Height" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.Height)" />
@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Weight: </label>
+			<label>Weight (kg): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.Weight" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.Weight)" />
@@ -37,7 +37,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Body Temperature: </label>
+			<label>Body Temperature (Celsius): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.BodyTemperature" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.BodyTemperature)" />
@@ -45,7 +45,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Blood Pressure Systolic: </label>
+			<label>Blood Pressure Systolic (mmHg): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.BloodPressureSystolic" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.BloodPressureSystolic)" />
@@ -53,7 +53,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Blood Pressure Diastolic: </label>
+			<label>Blood Pressure Diastolic (mmHg): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.BloodPressureDiastolic" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.BloodPressureDiastolic)" />
@@ -61,7 +61,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Heart Rate: </label>
+			<label>Heart Rate (bpm): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.HeartRate" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.HeartRate)" />
@@ -77,7 +77,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Other Blood Glucose Level: </label>
+			<label>Other Blood Glucose Level (mg/dL): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.OtherBloodGlucoseLevel" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.OtherBloodGlucoseLevel)" />
@@ -85,7 +85,7 @@
 		</div>
 
 		<div class="form-group">
-			<label>Other Blood Oxygen Level: </label>
+			<label>Other Blood Oxygen Level (SpO2): </label>
 			<div>
 				<InputNumber @bind-Value="@vitalsignsrecord.OtherBloodOxygenLevel" class="form-control" />
 				<ValidationMessage For="@(() => vitalsignsrecord.OtherBloodOxygenLevel)" />
@@ -148,5 +148,8 @@
 	protected async override Task OnInitializedAsync()
 	{
 		Patients = await _client.GetFromJsonAsync<List<Patient>>($"{Endpoints.PatientsEndpoint}");
+
+		vitalsignsrecord.RecordDate = DateTime.Today;
+		vitalsignsrecord.RecordTime = DateTime.Now;
 	}
 }

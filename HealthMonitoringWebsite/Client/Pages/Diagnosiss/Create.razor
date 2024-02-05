@@ -8,11 +8,13 @@
 
 <FormComponent ButtonText="Create Diagnosis" diagnosis="diagnosis" OnValidSubmit="@CreateDiagnosis" />
 
+
 @code {
 	private Diagnosis diagnosis = new Diagnosis();
 
 	private async Task CreateDiagnosis()
 	{
+		diagnosis.DiagnosisID = diagnosis.Id;
 		await _client.PostAsJsonAsync(Endpoints.DiagnosissEndpoint, diagnosis);
 		_navManager.NavigateTo("/diagnosiss/");
 	}

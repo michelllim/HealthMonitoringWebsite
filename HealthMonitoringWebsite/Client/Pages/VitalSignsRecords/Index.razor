@@ -1,5 +1,5 @@
 ﻿@implements IDisposable
-@page "/VitalSignsRecords/"
+@page "/vitalsignsrecords/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -8,7 +8,7 @@
 <h3 class="card-title">Vital Signs Records</h3>
 <br />
 
-<a href="/VitalSignsRecords/create/" class="btn btn-secondary">
+<a href="/vitalsignsrecords/create/" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Record
 </a>
@@ -27,6 +27,7 @@ else
 	<table class="table table-responsive" id="recordsTable">
 		<thead>
 			<tr>
+				<th>RecordID</th>
 				<th>Date</th>
 				<th>Time</th>
 				<th>Height</th>
@@ -48,6 +49,7 @@ else
 			@foreach (var vitalsignsrecord in VitalSignsRecords)
 			{
 				<tr>
+					<td>@vitalsignsrecord.Id</td>
 					<td>@vitalsignsrecord.RecordDate</td>
 					<td>@vitalsignsrecord.RecordTime</td>
 					<td>@vitalsignsrecord.Height</td>
@@ -63,10 +65,10 @@ else
 					<td>@vitalsignsrecord.Others</td>
 					<td>@vitalsignsrecord.PatientID</td>
 					<td>
-						<a href="/VitalSignsRecords/view/@vitalsignsrecord.Id" class="btn btn-primary">
+						<a href="/vitalsignsrecords/view/@vitalsignsrecord.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
 						</a>
-						<a href="/VitalSignsRecords/edit/@vitalsignsrecord.Id" class="btn btn-warning">
+						<a href="/vitalsignsrecords/edit/@vitalsignsrecord.Id" class="btn btn-warning">
 							<span class="oi oi-pencil"></span>
 						</a>
 						<button class="btn btn-danger" @onclick="@(()=>Delete(vitalsignsrecord.Id))">

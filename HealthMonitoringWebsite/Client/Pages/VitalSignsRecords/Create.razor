@@ -13,6 +13,7 @@
 
 	private async Task CreateVitalSignsRecord()
 	{
+		vitalsignsrecord.RecordID = vitalsignsrecord.Id;
 		await _client.PostAsJsonAsync(Endpoints.VitalSignsRecordsEndpoint, vitalsignsrecord);
 		_navManager.NavigateTo("/vitalsignsrecords/");
 	}

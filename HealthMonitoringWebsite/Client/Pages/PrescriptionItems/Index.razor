@@ -29,6 +29,7 @@ else
 	<table class="table table-responsive" id="pItemsTable">
 		<thead>
 			<tr>
+				<th>PrecriptionItemID</th>
 				<th>Dosage</th>
 				<th>Duration</th>
 				<th>Refill</th>
@@ -41,6 +42,7 @@ else
 			@foreach (var prescriptionItem in PrescriptionItems)
 			{
 				<tr>
+					<td>@prescriptionItem.Id</td>
 					<td>@prescriptionItem.PDosage</td>
 					<td>@prescriptionItem.PDuration</td>
 					<td>@prescriptionItem.PRefill</td>

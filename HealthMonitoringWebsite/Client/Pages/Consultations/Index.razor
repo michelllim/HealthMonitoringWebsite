@@ -1,5 +1,5 @@
 ﻿@implements IDisposable
-@page "/Consultations/"
+@page "/consultations/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -9,7 +9,7 @@
 <h3 class="card-title">Consultations</h3>
 <br />
 
-<a href="/Consultations/create/" class="btn btn-secondary">
+<a href="/consultations/create/" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Consultation
 </a>
@@ -28,6 +28,7 @@ else
 	<table class="table table-responsive" id="consultationsTable">
 		<thead>
 			<tr>
+				<th>ConsultationID</th>
 				<th>Date</th>
 				<th>Start Time</th>
 				<th>End Time</th>
@@ -43,6 +44,7 @@ else
 			@foreach (var consultation in Consultations)
 			{
 				<tr>
+					<td>@consultation.Id</td>
 					<td>@consultation.ConsultationDate</td>
 					<td>@consultation.ConsultationStartTime</td>
 					<td>@consultation.ConsultationEndTime</td>
@@ -52,10 +54,10 @@ else
 					<td>@consultation.RecordID</td>
 					<td>@consultation.AppointmentID</td>
 					<td>
-						<a href="/Consultations/view/@consultation.Id" class="btn btn-primary">
+						<a href="/consultations/view/@consultation.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
 						</a>
-						<a href="/Consultations/edit/@consultation.Id" class="btn btn-warning">
+						<a href="/consultations/edit/@consultation.Id" class="btn btn-warning">
 							<span class="oi oi-pencil"></span>
 						</a>
 						<button class="btn btn-danger" @onclick="@(()=>Delete(consultation.Id))">

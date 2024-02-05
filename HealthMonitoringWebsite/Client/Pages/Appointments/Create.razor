@@ -13,6 +13,7 @@
 
 	private async Task CreateAppointment()
 	{
+		appointment.AppointmentID = appointment.Id;
 		await _client.PostAsJsonAsync(Endpoints.AppointmentsEndpoint, appointment);
 		_navManager.NavigateTo("/appointments/");
 	}

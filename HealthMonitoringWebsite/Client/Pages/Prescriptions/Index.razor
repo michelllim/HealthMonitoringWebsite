@@ -8,7 +8,7 @@
 <h3 class="card-title">Prescriptions</h3>
 <br />
 
-<a href="/Prescriptions/create/" class="btn btn-secondary">
+<a href="/prescriptions/create/" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Prescription
 </a>
@@ -24,9 +24,10 @@
 }
 else
 {
-	<table class="table table-responsive" id="prescrioptionsTable">
+	<table class="table table-responsive" id="prescriptionsTable">
 		<thead>
 			<tr>
+				<th>PrescriptionID</th>
 				<th>Issue Date</th>
 				<th>Expiry Date</th>
 				<th>ConsultationID</th>
@@ -37,14 +38,15 @@ else
 			@foreach (var prescription in Prescriptions)
 			{
 				<tr>
+					<td>@prescription.Id</td>
 					<td>@prescription.PIssueDate</td>
 					<td>@prescription.PExpiryDate</td>
 					<td>@prescription.ConsultationID</td>
 					<td>
-						<a href="/Prescriptions/view/@prescription.Id" class="btn btn-primary">
+						<a href="/prescriptions/view/@prescription.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
 						</a>
-						<a href="/Prescriptions/edit/@prescription.Id" class="btn btn-warning">
+						<a href="/prescriptions/edit/@prescription.Id" class="btn btn-warning">
 							<span class="oi oi-pencil"></span>
 						</a>
 						<button class="btn btn-danger" @onclick="@(()=>Delete(prescription.Id))">
@@ -82,11 +84,11 @@ else
 
 	protected async override Task OnAfterRenderAsync(bool firstRender)
 	{
-		await js.InvokeVoidAsync("AddDataTable", "#prescrioptionsTable");
+		await js.InvokeVoidAsync("AddDataTable", "#prescriptionsTable");
 	}
 
 	public void Dispose()
 	{
-		js.InvokeVoidAsync("DataTablesDispose", "#prescrioptionsTable");
+		js.InvokeVoidAsync("DataTablesDispose", "#prescriptionsTable");
 	}
 }

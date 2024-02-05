@@ -23,8 +23,8 @@
 			<div>
 				<InputSelect @bind-Value="patient.PatientGender" class="form-control">
 					<option value="">-- Select Gender --</option>
-					<option value="@patient.PatientGender">Male</option>
-					<option value="@patient.PatientGender">Female</option>
+					<option value="Male">Male</option>
+					<option value="Female">Female</option>
 				</InputSelect>
 				<ValidationMessage For="@(() => patient.PatientGender)" />
 			</div>
@@ -59,12 +59,12 @@
 			<div>
 				<InputSelect @bind-Value="patient.PatientBloodType" class="form-control">
 					<option value="">-- Select Blood Type --</option>
-					<option value="@patient.PatientBloodType">A+</option>
-					<option value="@patient.PatientBloodType">A-</option>
-					<option value="@patient.PatientBloodType">B+</option>
-					<option value="@patient.PatientBloodType">B-</option>
-					<option value="@patient.PatientBloodType">O+</option>
-					<option value="@patient.PatientBloodType">O-</option>
+					<option value="A+">A+</option>
+					<option value="A-">A-</option>
+					<option value="B+">B+</option>
+					<option value="B-">B-</option>
+					<option value="O+">O+</option>
+					<option value="O-">O-</option>
 				</InputSelect>
 				<ValidationMessage For="@(() => patient.PatientBloodType)" />
 			</div>

@@ -1,5 +1,5 @@
 ﻿@implements IDisposable
-@page "/Patients/"
+@page "/patients/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -9,7 +9,7 @@
 <h3 class="card-title">Patients</h3>
 <br />
 
-<a href="/Patients/create/" class="btn btn-secondary">
+<a href="/patients/create/" class="btn btn-secondary">
 	<span class="oi oi-plus"></span>
 	Create New Patient
 </a>
@@ -47,7 +47,7 @@ else
 			@foreach (var patient in Patients)
 			{
 				<tr>
-					<td>@patient.PatientID</td>
+					<td>@patient.Id</td>
 					<td>@patient.PatientName</td>
 					<td>@patient.PatientDateOfBirth</td>
 					<td>@patient.PatientGender</td>
@@ -60,10 +60,10 @@ else
 					<td>@patient.PatientEmergencyContact</td>
 					<td>@patient.Email</td>
 					<td>
-						<a href="/Patients/view/@patient.Id" class="btn btn-primary">
+						<a href="/patients/view/@patient.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
 						</a>
-						<a href="/Patients/edit/@patient.Id" class="btn btn-warning">
+						<a href="/patients/edit/@patient.Id" class="btn btn-warning">
 							<span class="oi oi-pencil"></span>
 						</a>
 						<button class="btn btn-danger" @onclick="@(()=>Delete(patient.Id))">

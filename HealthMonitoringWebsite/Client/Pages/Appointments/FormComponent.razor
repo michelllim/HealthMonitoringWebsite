@@ -31,7 +31,11 @@
 		<div class="form-group">
 			<label>Type: </label>
 			<div>
-				<InputText @bind-Value="@appointment.AppointmentType" class="form-control" />
+				<InputSelect @bind-Value="appointment.AppointmentType" class="form-control">
+					<option value="">-- Select Type --</option>
+					<option value="Online">Online</option>
+					<option value="FaceToFace">Face To Face</option>
+				</InputSelect>
 				<ValidationMessage For="@(() => appointment.AppointmentType)" />
 			</div>
 		</div>
@@ -39,7 +43,11 @@
 		<div class="form-group">
 			<label>Confirmation: </label>
 			<div>
-				<InputText @bind-Value="@appointment.AppointmentConfirmation" class="form-control" />
+				<InputSelect @bind-Value="appointment.AppointmentConfirmation" class="form-control">
+					<option value="">-- Select Confirmation --</option>
+					<option value="Confirmed">Confirmed</option>
+					<option value="Not Confirmed">Not Confirmed</option>
+				</InputSelect>
 				<ValidationMessage For="@(() => appointment.AppointmentConfirmation)" />
 			</div>
 		</div>
@@ -104,5 +112,9 @@
 	{
 		Patients = await _client.GetFromJsonAsync<List<Patient>>($"{Endpoints.PatientsEndpoint}");
 		Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+
+		appointment.AppointmentDate = DateTime.Today;
+		appointment.AppointmentStartTime = DateTime.Now;
+		appointment.AppointmentEndTime = DateTime.Now;
 	}
 }

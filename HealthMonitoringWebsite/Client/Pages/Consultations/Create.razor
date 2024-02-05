@@ -13,6 +13,7 @@
 
 	private async Task CreateConsultation()
 	{
+		consultation.ConsultationID = consultation.Id;
 		await _client.PostAsJsonAsync(Endpoints.ConsultationsEndpoint, consultation);
 		_navManager.NavigateTo("/consultations/");
 	}

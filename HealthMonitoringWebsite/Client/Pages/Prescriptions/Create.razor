@@ -13,6 +13,7 @@
 
 	private async Task CreatePrescription()
 	{
+		prescription.PrescriptionID = prescription.Id;
 		await _client.PostAsJsonAsync(Endpoints.PrescriptionsEndpoint, prescription);
 		_navManager.NavigateTo("/prescriptions/");
 	}

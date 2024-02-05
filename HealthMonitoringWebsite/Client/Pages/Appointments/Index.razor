@@ -29,6 +29,7 @@ else
     <table class="table table-responsive" id="appointmentsTable">
         <thead>
             <tr>
+                <th>AppointmentID</th>
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
@@ -39,13 +40,14 @@ else
                 <th>Actions</th>
 
                 @* <th>Password</th> *@
-                <th>Actions</th>
+                
             </tr>
         </thead>
         <tbody>
             @foreach (var appointment in Appointments)
             {
                 <tr>
+                    <td>@appointment.Id</td>
                     <td>@appointment.AppointmentDate</td>
                     <td>@appointment.AppointmentStartTime</td>
                     <td>@appointment.AppointmentEndTime</td>
@@ -86,8 +88,8 @@ else
     {
         if (Appointments != null)
         {
-            var appointment = Appointments.First(q => q.Id == appointmentId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {appointment.AppointmentID}?");
+            var Appointment = Appointments.First(q => q.Id == appointmentId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Appointment.AppointmentID}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.AppointmentsEndpoint}/{appointmentId}");

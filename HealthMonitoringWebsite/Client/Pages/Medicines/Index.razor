@@ -29,7 +29,7 @@ else
     <table class="table table-responsive" id="medicinesTable">
         <thead>
             <tr>
-                <th>MedicineId</th>
+                <th>MedicineID</th>
                 <th>Name</th>
                 <th>Strength</th>
                 <th>Type</th>
@@ -46,7 +46,7 @@ else
             @foreach (var medicine in Medicines)
             {
                 <tr>
-                    <td>@medicine.MedicineID</td>
+                    <td>@medicine.Id</td>
                     <td>@medicine.MName</td>
                     <td>@medicine.MStrength</td>
                     <td>@medicine.MType</td>

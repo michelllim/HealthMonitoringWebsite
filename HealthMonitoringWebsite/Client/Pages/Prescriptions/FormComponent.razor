@@ -71,6 +71,9 @@
 	protected async override Task OnInitializedAsync()
 	{
 		Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
+
+		prescription.PIssueDate = DateTime.Today;
+		prescription.PExpiryDate = DateTime.Today;
 	}
 
 }

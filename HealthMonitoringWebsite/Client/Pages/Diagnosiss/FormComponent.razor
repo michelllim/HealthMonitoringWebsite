@@ -84,5 +84,8 @@
 	protected async override Task OnInitializedAsync()
 	{
 		Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
+
+		diagnosis.DiagnosisDate = DateTime.Today;
+		diagnosis.DiagnosisTime = DateTime.Now;
 	}
 }
