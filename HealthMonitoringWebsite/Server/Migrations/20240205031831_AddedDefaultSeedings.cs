@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace HealthMonitoringWebsite.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class newDb : Migration
+    public partial class AddedDefaultSeedings : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -483,6 +485,58 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         principalTable: "Prescriptions",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", null, "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", null, "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "6992fd79-9488-410a-ad3d-0b04da3bb064", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEF1La8rUULBQ/hkHhs1qscqUUNcs9n6wfuJGLmstycqZfESgdoJ54Rtm4tWOL77abg==", null, false, "ed1f0805-7bb6-4640-bb6f-318825d47be8", false, "admin@localhost.com" });
+
+            migrationBuilder.InsertData(
+                table: "Medicines",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "MExpiryDate", "MIngredients", "MInstructions", "MName", "MPurpose", "MStrength", "MTotalAmount", "MType", "MedicineID", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 5, 11, 18, 31, 616, DateTimeKind.Local).AddTicks(4495), null, "Adults and children 10 years of age and older—100 milligrams (mg) three times a day. Do not take more than 200 mg at one time or more than 600 mg per day.\r\nChildren younger than 10 years of age—Use is not recommended", "Benzonatate", "It is used to relieve coughing.", "100mg", 0, "Oral Capsule", 1, null },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 5, 11, 18, 31, 616, DateTimeKind.Local).AddTicks(4522), null, "Initial dose: 400 mg orally per day in 1 to 2 divided doses\r\nMaintenance dose: 400 to 800 mg orally per day\r\nYou should not use acebutolol if you have a serious heart condition such as \"AV block\" (2nd or 3rd degree), severe heart failure, or slow heartbeats that have caused you to faint.", "Acebutolol", "It is a beta blocker for the treatment of hypertension and arrhythmias (lowers blood pressure and irregular heartbeat).", "200 mg", 0, "Oral Capsule", 2, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Patients",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Email", "Password", "PatientAddress", "PatientAllergies", "PatientBloodType", "PatientContactNumber", "PatientDateOfBirth", "PatientEmergencyContact", "PatientFamilyHistory", "PatientGender", "PatientID", "PatientNRIC", "PatientName", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Tampines Avenue 1 Block 550 #11-222", "Animal fur", "A-", "89547967", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "89547990", "Family has record of asthma, high blood pressure and diabetes.", "Female", 1, "S12345678A", "Lily Wong", null },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Tampines Street 53 Block 222 #12-232", "Nil", "B+", "98885222", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "98834555", "Family has record of seizures and diabetes.", "Male", 2, "S12345678B", "Tommy Lin", null },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Bedok Reservoir Road Block 222 #07-222", "Pollen", "A+", "88787967", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "89097990", "Family has record of cancer, asthma, high blood pressure and diabetes.", "Male", 3, "S12345111F", "Andy Low", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Staffs",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Email", "Password", "StaffContactNumber", "StaffID", "StaffName", "StaffRole", "StaffSpecialization", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "peinee2005@gmail.com", "DPeiNee123", "89547968", 1, "Chen Pei Nee", "Doctor", "Cardiologist", null },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "tomLiew@gmail.com", "DTom123", "68902727", 2, "Tom Liew", "Doctor", "Pulmonologist", null },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "amy123@gmail.com", "NAmy123", "98213410", 3, "Amy Tang", "Nurse", "Neonatal Nurse", null },
+                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "valiT@gmail.com", "NVali123", "92859335", 4, "Vali Thamoi", "Nurse", "Psychiatric Nurse", null },
+                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "johnT@gmail.com", "AJohn123", "86547733", 5, "John", "Administrative Staff", "Receptionists", null },
+                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tammy@gmail.com", "MRTammy123", "85557763", 6, "Tammy", "Medical Records Staff", "Receptionists", null },
+                    { 7, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "TYanTing@gmail.com", "TYanTing123", "90683274", 7, "Tan Yan Ting", "Therapists", "Physical Therapists", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_PatientID",

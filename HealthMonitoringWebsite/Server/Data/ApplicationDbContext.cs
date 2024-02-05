@@ -1,4 +1,5 @@
 ﻿using Duende.IdentityServer.EntityFramework.Options;
+using HealthMonitoringWebsite.Server.Configurations.Entities;
 using HealthMonitoringWebsite.Server.Models;
 using HealthMonitoringWebsite.Shared.Domain;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -24,6 +25,18 @@ namespace HealthMonitoringWebsite.Server.Data
         public DbSet<PrescriptionItem> PrescriptionItems { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<VitalSignsRecord> VitalSignsRecord { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new PatientSeedConfiguration());
+            builder.ApplyConfiguration(new MedicineSeedConfiguration());
+            builder.ApplyConfiguration(new StaffSeedConfiguration());
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserSeedConfiguration());
+            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
+        }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
@@ -70,7 +83,7 @@ namespace HealthMonitoringWebsite.Server.Data
         //    modelBuilder.Entity<Prescription>()
         //        .Property(a => a.PExpiryDate)
         //        .HasColumnType("date");
-          
+
         //    modelBuilder.Entity<Prescription>()
         //        .Property(a => a.PIssueDate)
         //        .HasColumnType("date");

@@ -8,11 +8,13 @@
 
 <h3 class="card-title">Diagnoses</h3>
 <br />
-
-<a href="/diagnosiss/create/" class="btn btn-secondary">
-	<span class="oi oi-plus"></span>
-	Create New Diagnosis
-</a>
+@if (userIsAdmin || userIsStaff)
+{
+	<a href="/diagnosiss/create/" class="btn btn-secondary">
+		<span class="oi oi-plus"></span>
+		Create New Diagnosis
+	</a>
+}
 <br />
 <a class="nav-link">
 	<img style="width: 800px; height: 200px; left: 400px; top: 0px; position: absolute" src="img/Diagnosis.png" />
@@ -35,7 +37,10 @@ else
 				<th>Symptoms</th>
 				<th>Conditions</th>
 				<th>ConsultationID</th>
-				<th>Actions</th>
+				@if (userIsAdmin || userIsStaff)
+				{
+					<th>Actions</th>
+				}
 			</tr>
 		</thead>
 		<tbody>
@@ -49,17 +54,20 @@ else
 					<td>@diagnosis.Symptoms</td>
 					<td>@diagnosis.Conditions</td>
 					<td>@diagnosis.ConsultationID</td>
-					<td>
-						<a href="/diagnosiss/view/@diagnosis.Id" class="btn btn-primary">
+					@if (userIsAdmin || userIsStaff)
+					{
+						<td>
+							<a href="/diagnosiss/view/@diagnosis.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
-						</a>
-						<a href="/diagnosiss/edit/@diagnosis.Id" class="btn btn-warning">
-							<span class="oi oi-pencil"></span>
-						</a>
-						<button class="btn btn-danger" @onclick="@(()=>Delete(diagnosis.Id))">
-							<span class="oi oi-delete"></span>
-						</button>
-					</td>
+							</a>
+							<a href="/diagnosiss/edit/@diagnosis.Id" class="btn btn-warning">
+								<span class="oi oi-pencil"></span>
+							</a>
+							<button class="btn btn-danger" @onclick="@(()=>Delete(diagnosis.Id))">
+								<span class="oi oi-delete"></span>
+							</button>
+						</td>
+					}
 				</tr>
 			}
 		</tbody>
@@ -67,12 +75,38 @@ else
 }
 
 @code {
+	
 	private List<Diagnosis>? Diagnosiss;
+
+	[Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+	private bool userIsAdmin = false;
+	private bool userIsStaff = false;
+	private bool userIsUser = false;
+	
 
 	protected async override Task OnInitializedAsync()
 	{
 		_interceptor.MonitorEvent();
 		Diagnosiss = await _client.GetFromJsonAsync<List<Diagnosis>>($"{Endpoints.DiagnosissEndpoint}");
+		
+		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var userName = state.User?.Identity?.Name;
+		if (state.User?.Identity?.IsAuthenticated ?? false)
+		{
+			if (userName.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+			{
+				userIsAdmin = true;
+			}
+			else if (userName.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+			{
+				userIsStaff = true;
+			}
+			else
+			{
+				userIsUser = true;
+			}
+		}
 	}
 
 	async Task Delete(int diagnosisId)
@@ -98,4 +132,6 @@ else
 	{
 		js.InvokeVoidAsync("DataTablesDispose", "#diagnosissTable");
 	}
+
+
 }

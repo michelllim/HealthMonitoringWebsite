@@ -111,9 +111,13 @@
                 Member
                 <div class="dropdown-content">
                     <a href="staffs">Staff</a>
-                    <a href="patients">Patient</a>
+                    <a href="patients">Patients</a>
                 </div>
             </div>
+        }
+        else if (userIsStaff)
+        {
+            <a href="patients" NavLink class="nav-link">Patients</a>
         }
 
 
@@ -121,17 +125,17 @@
         <a href="appointments" NavLink class="nav-link">Appointments</a>
         <a href="consultations" NavLink class="nav-link">Consultations</a>
         <a href="diagnosiss" NavLink class="nav-link">Diagnoses</a>
-        <a href="vitalsignsrecords" NavLink class="nav-link">Analysis</a>
+        <a href="vitalsignsrecords" NavLink class="nav-link">Records</a>
 
         <div class="nav-link dropdown">
             Prescription
             <div NavLink class="dropdown-content">
-                <a href="prescriptions">Prescription</a>
-                <a href="prescriptionItems">Prescription Item</a>
+                <a href="prescriptions">Prescriptions</a>
+                <a href="prescriptionItems">Prescription Items</a>
             </div>
         </div>
 
-        <a href="medicines" class="nav-link">Medicine</a>
+        <a href="medicines" class="nav-link">Medicines</a>
         <a href="resourceLibrary" class="nav-link">Resource Library</a>
     </div>
 
@@ -175,7 +179,7 @@
             }
     </style>
     <div class="bottom-section-column">
-        <h3>Our Us</h3>
+        <h3>About Us</h3>
         <ul>
             <li><a href="AboutCompany">About Company</a></li>
             <li><a href="PrivacyPolicy">Privacy Policy</a></li>

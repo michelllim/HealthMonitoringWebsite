@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthMonitoringWebsite.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240204234111_newDb")]
-    partial class newDb
+    [Migration("20240205031831_AddedDefaultSeedings")]
+    partial class AddedDefaultSeedings
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,26 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6992fd79-9488-410a-ad3d-0b04da3bb064",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF1La8rUULBQ/hkHhs1qscqUUNcs9n6wfuJGLmstycqZfESgdoJ54Rtm4tWOL77abg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ed1f0805-7bb6-4640-bb6f-318825d47be8",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("HealthMonitoringWebsite.Shared.Domain.Appointment", b =>
@@ -447,6 +467,36 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Medicines");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MExpiryDate = new DateTime(2024, 5, 5, 11, 18, 31, 616, DateTimeKind.Local).AddTicks(4495),
+                            MInstructions = "Adults and children 10 years of age and older—100 milligrams (mg) three times a day. Do not take more than 200 mg at one time or more than 600 mg per day.\r\nChildren younger than 10 years of age—Use is not recommended",
+                            MName = "Benzonatate",
+                            MPurpose = "It is used to relieve coughing.",
+                            MStrength = "100mg",
+                            MTotalAmount = 0,
+                            MType = "Oral Capsule",
+                            MedicineID = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MExpiryDate = new DateTime(2024, 5, 5, 11, 18, 31, 616, DateTimeKind.Local).AddTicks(4522),
+                            MInstructions = "Initial dose: 400 mg orally per day in 1 to 2 divided doses\r\nMaintenance dose: 400 to 800 mg orally per day\r\nYou should not use acebutolol if you have a serious heart condition such as \"AV block\" (2nd or 3rd degree), severe heart failure, or slow heartbeats that have caused you to faint.",
+                            MName = "Acebutolol",
+                            MPurpose = "It is a beta blocker for the treatment of hypertension and arrhythmias (lowers blood pressure and irregular heartbeat).",
+                            MStrength = "200 mg",
+                            MTotalAmount = 0,
+                            MType = "Oral Capsule",
+                            MedicineID = 2
+                        });
                 });
 
             modelBuilder.Entity("HealthMonitoringWebsite.Shared.Domain.Patient", b =>
@@ -517,6 +567,59 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientAddress = "Tampines Avenue 1 Block 550 #11-222",
+                            PatientAllergies = "Animal fur",
+                            PatientBloodType = "A-",
+                            PatientContactNumber = "89547967",
+                            PatientDateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientEmergencyContact = "89547990",
+                            PatientFamilyHistory = "Family has record of asthma, high blood pressure and diabetes.",
+                            PatientGender = "Female",
+                            PatientID = 1,
+                            PatientNRIC = "S12345678A",
+                            PatientName = "Lily Wong"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientAddress = "Tampines Street 53 Block 222 #12-232",
+                            PatientAllergies = "Nil",
+                            PatientBloodType = "B+",
+                            PatientContactNumber = "98885222",
+                            PatientDateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientEmergencyContact = "98834555",
+                            PatientFamilyHistory = "Family has record of seizures and diabetes.",
+                            PatientGender = "Male",
+                            PatientID = 2,
+                            PatientNRIC = "S12345678B",
+                            PatientName = "Tommy Lin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientAddress = "Bedok Reservoir Road Block 222 #07-222",
+                            PatientAllergies = "Pollen",
+                            PatientBloodType = "A+",
+                            PatientContactNumber = "88787967",
+                            PatientDateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PatientEmergencyContact = "89097990",
+                            PatientFamilyHistory = "Family has record of cancer, asthma, high blood pressure and diabetes.",
+                            PatientGender = "Male",
+                            PatientID = 3,
+                            PatientNRIC = "S12345111F",
+                            PatientName = "Andy Low"
+                        });
                 });
 
             modelBuilder.Entity("HealthMonitoringWebsite.Shared.Domain.Prescription", b =>
@@ -653,6 +756,99 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Staffs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "peinee2005@gmail.com",
+                            Password = "DPeiNee123",
+                            StaffContactNumber = "89547968",
+                            StaffID = 1,
+                            StaffName = "Chen Pei Nee",
+                            StaffRole = "Doctor",
+                            StaffSpecialization = "Cardiologist"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "tomLiew@gmail.com",
+                            Password = "DTom123",
+                            StaffContactNumber = "68902727",
+                            StaffID = 2,
+                            StaffName = "Tom Liew",
+                            StaffRole = "Doctor",
+                            StaffSpecialization = "Pulmonologist"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "amy123@gmail.com",
+                            Password = "NAmy123",
+                            StaffContactNumber = "98213410",
+                            StaffID = 3,
+                            StaffName = "Amy Tang",
+                            StaffRole = "Nurse",
+                            StaffSpecialization = "Neonatal Nurse"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "valiT@gmail.com",
+                            Password = "NVali123",
+                            StaffContactNumber = "92859335",
+                            StaffID = 4,
+                            StaffName = "Vali Thamoi",
+                            StaffRole = "Nurse",
+                            StaffSpecialization = "Psychiatric Nurse"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "johnT@gmail.com",
+                            Password = "AJohn123",
+                            StaffContactNumber = "86547733",
+                            StaffID = 5,
+                            StaffName = "John",
+                            StaffRole = "Administrative Staff",
+                            StaffSpecialization = "Receptionists"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "Tammy@gmail.com",
+                            Password = "MRTammy123",
+                            StaffContactNumber = "85557763",
+                            StaffID = 6,
+                            StaffName = "Tammy",
+                            StaffRole = "Medical Records Staff",
+                            StaffSpecialization = "Receptionists"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "TYanTing@gmail.com",
+                            Password = "TYanTing123",
+                            StaffContactNumber = "90683274",
+                            StaffID = 7,
+                            StaffName = "Tan Yan Ting",
+                            StaffRole = "Therapists",
+                            StaffSpecialization = "Physical Therapists"
+                        });
                 });
 
             modelBuilder.Entity("HealthMonitoringWebsite.Shared.Domain.VitalSignsRecord", b =>
@@ -752,6 +948,20 @@ namespace HealthMonitoringWebsite.Server.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -841,6 +1051,13 @@ namespace HealthMonitoringWebsite.Server.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -8,11 +8,13 @@
 
 <h3 class="card-title">Medicines</h3>
 <br />
-
-<a href="/medicines/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Medicines
-</a>
+@if (userIsAdmin || userIsStaff)
+{
+    <a href="/medicines/create" class="btn btn-secondary">
+        <span class="oi oi-plus"></span>
+        Create New Medicines
+    </a>
+}
 <br />
 <a class="nav-link">
     <img style="width: 800px; height: 200px; left: 400px; top: 0px; position: absolute" src="img/Medicine.jpg" />
@@ -38,8 +40,10 @@ else
                 <th>Instructions</th>
                 <th>Purpose</th>
                 <th>Expiry Date</th>
-
-                <th>Actions</th>
+                @if (userIsAdmin || userIsStaff)
+                {
+                    <th>Actions</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -55,18 +59,20 @@ else
                     <td>@medicine.MInstructions</td>
                     <td>@medicine.MPurpose</td>
                     <td>@medicine.MExpiryDate</td>
-
-                    <td>
-                        <a href="/medicines/view/@medicine.Id" class="btn btn-primary">
+                    @if (userIsAdmin || userIsStaff)
+                    {
+                        <td>
+                            <a href="/medicines/view/@medicine.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/medicines/edit/@medicine.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(medicine.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
+                            </a>
+                            <a href="/medicines/edit/@medicine.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(medicine.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                         </td>
+                    }
                 </tr>
             }
         </tbody>
@@ -76,11 +82,34 @@ else
 @code {
 
     private List<Medicine>? Medicines;
+    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+    private bool userIsAdmin = false;
+    private bool userIsStaff = false;
+    private bool userIsUser = false;
 
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
         Medicines = await _client.GetFromJsonAsync<List<Medicine>>($"{Endpoints.MedicinesEndpoint}");
+
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userName = state.User?.Identity?.Name;
+        if (state.User?.Identity?.IsAuthenticated ?? false)
+        {
+            if (userName.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+            {
+                userIsAdmin = true;
+            }
+            else if (userName.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+            {
+                userIsStaff = true;
+            }
+            else
+            {
+                userIsUser = true;
+            }
+        }
     }
 
     async Task Delete(int medicineId)

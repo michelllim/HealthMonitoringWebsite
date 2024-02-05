@@ -61,7 +61,7 @@
 					{
 						foreach (var vitalsignsrecord in VitalSignsRecords)
 						{
-							<option value="@vitalsignsrecord.Id">@vitalsignsrecord.RecordDate - @vitalsignsrecord.Patient</option>
+							<option value="@vitalsignsrecord.Id">@vitalsignsrecord.RecordDate - @vitalsignsrecord.PatientID</option>
 						}
 					}
 				</InputSelect>
@@ -78,7 +78,7 @@
 					{
 						foreach (var appointment in Appointments)
 						{
-							<option value="@appointment.Id">@appointment.AppointmentDate - @appointment.Patient</option>
+							<option value="@appointment.Id">@appointment.AppointmentDate - @appointment.PatientID</option>
 						}
 					}
 				</InputSelect>

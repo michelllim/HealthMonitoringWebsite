@@ -16,6 +16,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
             builder.HasData(
                 new Medicine
                 {
+                    Id = 1,
                     MedicineID = 1,
                     MName = "Benzonatate",
                     MStrength = "100mg",
@@ -28,6 +29,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                 },
                 new Medicine
                 {
+                    Id = 2,
                     MedicineID = 2,
                     MName = "Acebutolol",
                     MStrength = "200 mg",

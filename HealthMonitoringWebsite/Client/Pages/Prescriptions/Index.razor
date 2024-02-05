@@ -7,11 +7,13 @@
 
 <h3 class="card-title">Prescriptions</h3>
 <br />
-
-<a href="/prescriptions/create/" class="btn btn-secondary">
-	<span class="oi oi-plus"></span>
-	Create New Prescription
-</a>
+@if (userIsAdmin || userIsStaff)
+{
+	<a href="/prescriptions/create/" class="btn btn-secondary">
+		<span class="oi oi-plus"></span>
+		Create New Prescription
+	</a>
+}
 <br />
 <a class="nav-link">
 	<img style="width: 800px; height: 200px; left: 400px; top: 0px; position: absolute" src="img/Doctor-writing-prescription.png" />
@@ -31,7 +33,10 @@ else
 				<th>Issue Date</th>
 				<th>Expiry Date</th>
 				<th>ConsultationID</th>
-				<th>Actions</th>
+				@if (userIsAdmin || userIsStaff)
+				{
+					<th>Actions</th>
+				}
 			</tr>
 		</thead>
 		<tbody>
@@ -42,17 +47,20 @@ else
 					<td>@prescription.PIssueDate</td>
 					<td>@prescription.PExpiryDate</td>
 					<td>@prescription.ConsultationID</td>
-					<td>
-						<a href="/prescriptions/view/@prescription.Id" class="btn btn-primary">
+					@if (userIsAdmin || userIsStaff)
+					{
+						<td>
+							<a href="/prescriptions/view/@prescription.Id" class="btn btn-primary">
 							<span class="oi oi-book"></span>
-						</a>
-						<a href="/prescriptions/edit/@prescription.Id" class="btn btn-warning">
-							<span class="oi oi-pencil"></span>
-						</a>
-						<button class="btn btn-danger" @onclick="@(()=>Delete(prescription.Id))">
-							<span class="oi oi-delete"></span>
-						</button>
-					</td>
+							</a>
+							<a href="/prescriptions/edit/@prescription.Id" class="btn btn-warning">
+								<span class="oi oi-pencil"></span>
+							</a>
+							<button class="btn btn-danger" @onclick="@(()=>Delete(prescription.Id))">
+								<span class="oi oi-delete"></span>
+							</button>
+						</td>
+					}
 				</tr>
 			}
 		</tbody>
@@ -61,11 +69,34 @@ else
 
 @code {
 	private List<Prescription>? Prescriptions;
+	[Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+	private bool userIsAdmin = false;
+	private bool userIsStaff = false;
+	private bool userIsUser = false;
 
 	protected async override Task OnInitializedAsync()
 	{
 		_interceptor.MonitorEvent();
 		Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
+	
+		var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		var userName = state.User?.Identity?.Name;
+		if (state.User?.Identity?.IsAuthenticated ?? false)
+		{
+			if (userName.EndsWith("@admin.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+			{
+				userIsAdmin = true;
+			}
+			else if (userName.EndsWith("@staff.vitalmed.com", StringComparison.OrdinalIgnoreCase))
+			{
+				userIsStaff = true;
+			}
+			else
+			{
+				userIsUser = true;
+			}
+		}
 	}
 
 	async Task Delete(int prescriptionId)

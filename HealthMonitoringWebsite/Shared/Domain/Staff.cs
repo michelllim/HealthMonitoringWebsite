@@ -21,7 +21,6 @@ namespace HealthMonitoringWebsite.Shared.Domain
 		public string? StaffContactNumber { get; set; }
 
 		[Required]
-		[RegularExpression(@"^(Nurse|Doctor|Administrator)$", ErrorMessage = "Invalid Staff Role")]
 		public string? StaffRole { get; set; }
 		public string? StaffSpecialization { get; set; }
 

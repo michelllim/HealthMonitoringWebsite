@@ -13,6 +13,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
             builder.HasData(
                 new Staff
                 {
+                    Id = 1,
                     StaffID = 1,
                     StaffName = "Chen Pei Nee",
                     StaffContactNumber = "89547968",
@@ -23,6 +24,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                 },
                 new Staff
                 {
+                    Id = 2,
                     StaffID = 2,
                     StaffName = "Tom Liew",
                     StaffContactNumber = "68902727",
@@ -32,7 +34,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                     Password = "DTom123"
                 },
                 new Staff
-                {
+                {Id = 3,
                     StaffID = 3,
                     StaffName = "Amy Tang",
                     StaffContactNumber = "98213410",
@@ -42,7 +44,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                     Password = "NAmy123"
                 },
                 new Staff
-                {
+                {Id = 4,
                     StaffID = 4,
                     StaffName = "Vali Thamoi",
                     StaffContactNumber = "92859335",
@@ -52,7 +54,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                     Password = "NVali123"
                 },
                 new Staff
-                {
+                {Id = 5,
                     StaffID = 5,
                     StaffName = "John",
                     StaffContactNumber = "86547733",
@@ -62,7 +64,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                     Password = "AJohn123"
                 },
                 new Staff
-                {
+                {Id = 6,
                     StaffID = 6,
                     StaffName = "Tammy",
                     StaffContactNumber = "85557763",
@@ -72,7 +74,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                     Password = "MRTammy123"
                 },
                 new Staff
-                {
+                {Id = 7,            
                     StaffID = 7,
                     StaffName = "Tan Yan Ting",
                     StaffContactNumber = "90683274",

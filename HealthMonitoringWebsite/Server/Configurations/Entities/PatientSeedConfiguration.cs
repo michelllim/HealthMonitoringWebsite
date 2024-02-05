@@ -13,6 +13,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
             _ = builder.HasData(
                 new Patient
                 {
+                    Id =1,
                     PatientID = 1,
                     PatientName = "Lily Wong",
                     //PatientDateOfBirth = "01/02/1990",
@@ -27,6 +28,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                 },
                 new Patient
                 {
+                    Id = 2,
                     PatientID = 2,
                     PatientName = "Tommy Lin",
                     //PatientDateOfBirth = "11/02/1977",
@@ -41,6 +43,7 @@ namespace HealthMonitoringWebsite.Server.Configurations.Entities
                 },
                 new Patient
                 {
+                    Id = 3,
                     PatientID = 3,
                     PatientName = "Andy Low",
                     //PatientDateOfBirth = "02/02/1989",
